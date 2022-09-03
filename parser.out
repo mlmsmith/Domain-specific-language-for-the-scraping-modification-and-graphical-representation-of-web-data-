@@ -1,0 +1,1292 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> statement
+Rule 1     statement -> scrape
+Rule 2     statement -> crawl
+Rule 3     scrape -> SCRAPE categories location response page manipulation sorting plot
+Rule 4     scrape -> location SCRAPE categories response page manipulation sorting plot
+Rule 5     crawl -> CRAWL categories crawl_location response instructions manipulation sorting plot
+Rule 6     crawl -> crawl_location CRAWL categories response instructions manipulation sorting plot
+Rule 7     categories -> category
+Rule 8     categories -> category COMMA categories
+Rule 9     category -> FIELD COLON SELECTOR MODIFIER
+Rule 10    category -> FIELD COLON SELECTOR
+Rule 11    location -> FROM URL
+Rule 12    crawl_location -> FROM URL COMMA SELECTOR
+Rule 13    response -> RESPONSE EQUALS SELECTOR
+Rule 14    page -> PAGE EQUALS SELECTOR
+Rule 15    page -> <empty>
+Rule 16    instructions -> RULES_LABEL EQUALS L_BRACKET rules R_BRACKET
+Rule 17    rules -> RULE
+Rule 18    rules -> RULE COMMA rules
+Rule 19    manipulation -> filtering aggregation
+Rule 20    manipulation -> filtering
+Rule 21    manipulation -> <empty>
+Rule 22    filtering -> WHERE conditions
+Rule 23    conditions -> condition
+Rule 24    conditions -> condition AND conditions
+Rule 25    conditions -> condition OR conditions
+Rule 26    condition -> COLUMN operator INTEGER
+Rule 27    condition -> COLUMN operator FLOAT
+Rule 28    condition -> COLUMN EQUALS SELECTOR
+Rule 29    operator -> EQUALS
+Rule 30    operator -> GREATER
+Rule 31    operator -> LESS
+Rule 32    operator -> GREATER_EQUAL
+Rule 33    operator -> LESS_EQUAL
+Rule 34    operator -> NOT_EQUAL
+Rule 35    aggregation -> GROUP_BY COLUMN
+Rule 36    aggregation -> GROUP_BY COLUMN HAVING aggregate
+Rule 37    aggregation -> GROUP_BY COLUMN HAVING aggregate operator INTEGER
+Rule 38    aggregation -> GROUP_BY COLUMN HAVING aggregate operator FLOAT
+Rule 39    aggregate -> AVERAGE
+Rule 40    aggregate -> SUM
+Rule 41    aggregate -> COUNT
+Rule 42    sorting -> ORDER_BY COLUMN
+Rule 43    sorting -> ORDER_BY COLUMN DESCENDING
+Rule 44    sorting -> <empty>
+Rule 45    plot -> BAR_PLOT x_axis COMMA y_axis
+Rule 46    plot -> LINE_PLOT x_axis COMMA y_axis
+Rule 47    plot -> <empty>
+Rule 48    x_axis -> X MODIFIER
+Rule 49    y_axis -> Y MODIFIER
+
+Terminals, with rules where they appear
+
+AND                  : 24
+AVERAGE              : 39
+BAR_PLOT             : 45
+COLON                : 9 10
+COLUMN               : 26 27 28 35 36 37 38 42 43
+COMMA                : 8 12 18 45 46
+COUNT                : 41
+CRAWL                : 5 6
+DESCENDING           : 43
+EQUALS               : 13 14 16 28 29
+FIELD                : 9 10
+FLOAT                : 27 38
+FROM                 : 11 12
+GREATER              : 30
+GREATER_EQUAL        : 32
+GROUP_BY             : 35 36 37 38
+HAVING               : 36 37 38
+INTEGER              : 26 37
+LESS                 : 31
+LESS_EQUAL           : 33
+LINE_PLOT            : 46
+L_BRACKET            : 16
+MODIFIER             : 9 48 49
+NOT_EQUAL            : 34
+OR                   : 25
+ORDER_BY             : 42 43
+PAGE                 : 14
+RESPONSE             : 13
+RULE                 : 17 18
+RULES_LABEL          : 16
+R_BRACKET            : 16
+SCRAPE               : 3 4
+SELECTOR             : 9 10 12 13 14 28
+SUM                  : 40
+URL                  : 11 12
+WHERE                : 22
+X                    : 48
+Y                    : 49
+error                : 
+
+Nonterminals, with rules where they appear
+
+aggregate            : 36 37 38
+aggregation          : 19
+categories           : 3 4 5 6 8
+category             : 7 8
+condition            : 23 24 25
+conditions           : 22 24 25
+crawl                : 2
+crawl_location       : 5 6
+filtering            : 19 20
+instructions         : 5 6
+location             : 3 4
+manipulation         : 3 4 5 6
+operator             : 26 27 37 38
+page                 : 3 4
+plot                 : 3 4 5 6
+response             : 3 4 5 6
+rules                : 16 18
+scrape               : 1
+sorting              : 3 4 5 6
+statement            : 0
+x_axis               : 45 46
+y_axis               : 45 46
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . statement
+    (1) statement -> . scrape
+    (2) statement -> . crawl
+    (3) scrape -> . SCRAPE categories location response page manipulation sorting plot
+    (4) scrape -> . location SCRAPE categories response page manipulation sorting plot
+    (5) crawl -> . CRAWL categories crawl_location response instructions manipulation sorting plot
+    (6) crawl -> . crawl_location CRAWL categories response instructions manipulation sorting plot
+    (11) location -> . FROM URL
+    (12) crawl_location -> . FROM URL COMMA SELECTOR
+
+    SCRAPE          shift and go to state 4
+    CRAWL           shift and go to state 6
+    FROM            shift and go to state 8
+
+    statement                      shift and go to state 1
+    scrape                         shift and go to state 2
+    crawl                          shift and go to state 3
+    location                       shift and go to state 5
+    crawl_location                 shift and go to state 7
+
+state 1
+
+    (0) S' -> statement .
+
+
+
+state 2
+
+    (1) statement -> scrape .
+
+    $end            reduce using rule 1 (statement -> scrape .)
+
+
+state 3
+
+    (2) statement -> crawl .
+
+    $end            reduce using rule 2 (statement -> crawl .)
+
+
+state 4
+
+    (3) scrape -> SCRAPE . categories location response page manipulation sorting plot
+    (7) categories -> . category
+    (8) categories -> . category COMMA categories
+    (9) category -> . FIELD COLON SELECTOR MODIFIER
+    (10) category -> . FIELD COLON SELECTOR
+
+    FIELD           shift and go to state 11
+
+    categories                     shift and go to state 9
+    category                       shift and go to state 10
+
+state 5
+
+    (4) scrape -> location . SCRAPE categories response page manipulation sorting plot
+
+    SCRAPE          shift and go to state 12
+
+
+state 6
+
+    (5) crawl -> CRAWL . categories crawl_location response instructions manipulation sorting plot
+    (7) categories -> . category
+    (8) categories -> . category COMMA categories
+    (9) category -> . FIELD COLON SELECTOR MODIFIER
+    (10) category -> . FIELD COLON SELECTOR
+
+    FIELD           shift and go to state 11
+
+    categories                     shift and go to state 13
+    category                       shift and go to state 10
+
+state 7
+
+    (6) crawl -> crawl_location . CRAWL categories response instructions manipulation sorting plot
+
+    CRAWL           shift and go to state 14
+
+
+state 8
+
+    (11) location -> FROM . URL
+    (12) crawl_location -> FROM . URL COMMA SELECTOR
+
+    URL             shift and go to state 15
+
+
+state 9
+
+    (3) scrape -> SCRAPE categories . location response page manipulation sorting plot
+    (11) location -> . FROM URL
+
+    FROM            shift and go to state 17
+
+    location                       shift and go to state 16
+
+state 10
+
+    (7) categories -> category .
+    (8) categories -> category . COMMA categories
+
+    FROM            reduce using rule 7 (categories -> category .)
+    RESPONSE        reduce using rule 7 (categories -> category .)
+    COMMA           shift and go to state 18
+
+
+state 11
+
+    (9) category -> FIELD . COLON SELECTOR MODIFIER
+    (10) category -> FIELD . COLON SELECTOR
+
+    COLON           shift and go to state 19
+
+
+state 12
+
+    (4) scrape -> location SCRAPE . categories response page manipulation sorting plot
+    (7) categories -> . category
+    (8) categories -> . category COMMA categories
+    (9) category -> . FIELD COLON SELECTOR MODIFIER
+    (10) category -> . FIELD COLON SELECTOR
+
+    FIELD           shift and go to state 11
+
+    categories                     shift and go to state 20
+    category                       shift and go to state 10
+
+state 13
+
+    (5) crawl -> CRAWL categories . crawl_location response instructions manipulation sorting plot
+    (12) crawl_location -> . FROM URL COMMA SELECTOR
+
+    FROM            shift and go to state 22
+
+    crawl_location                 shift and go to state 21
+
+state 14
+
+    (6) crawl -> crawl_location CRAWL . categories response instructions manipulation sorting plot
+    (7) categories -> . category
+    (8) categories -> . category COMMA categories
+    (9) category -> . FIELD COLON SELECTOR MODIFIER
+    (10) category -> . FIELD COLON SELECTOR
+
+    FIELD           shift and go to state 11
+
+    categories                     shift and go to state 23
+    category                       shift and go to state 10
+
+state 15
+
+    (11) location -> FROM URL .
+    (12) crawl_location -> FROM URL . COMMA SELECTOR
+
+    SCRAPE          reduce using rule 11 (location -> FROM URL .)
+    COMMA           shift and go to state 24
+
+
+state 16
+
+    (3) scrape -> SCRAPE categories location . response page manipulation sorting plot
+    (13) response -> . RESPONSE EQUALS SELECTOR
+
+    RESPONSE        shift and go to state 26
+
+    response                       shift and go to state 25
+
+state 17
+
+    (11) location -> FROM . URL
+
+    URL             shift and go to state 27
+
+
+state 18
+
+    (8) categories -> category COMMA . categories
+    (7) categories -> . category
+    (8) categories -> . category COMMA categories
+    (9) category -> . FIELD COLON SELECTOR MODIFIER
+    (10) category -> . FIELD COLON SELECTOR
+
+    FIELD           shift and go to state 11
+
+    category                       shift and go to state 10
+    categories                     shift and go to state 28
+
+state 19
+
+    (9) category -> FIELD COLON . SELECTOR MODIFIER
+    (10) category -> FIELD COLON . SELECTOR
+
+    SELECTOR        shift and go to state 29
+
+
+state 20
+
+    (4) scrape -> location SCRAPE categories . response page manipulation sorting plot
+    (13) response -> . RESPONSE EQUALS SELECTOR
+
+    RESPONSE        shift and go to state 26
+
+    response                       shift and go to state 30
+
+state 21
+
+    (5) crawl -> CRAWL categories crawl_location . response instructions manipulation sorting plot
+    (13) response -> . RESPONSE EQUALS SELECTOR
+
+    RESPONSE        shift and go to state 26
+
+    response                       shift and go to state 31
+
+state 22
+
+    (12) crawl_location -> FROM . URL COMMA SELECTOR
+
+    URL             shift and go to state 32
+
+
+state 23
+
+    (6) crawl -> crawl_location CRAWL categories . response instructions manipulation sorting plot
+    (13) response -> . RESPONSE EQUALS SELECTOR
+
+    RESPONSE        shift and go to state 26
+
+    response                       shift and go to state 33
+
+state 24
+
+    (12) crawl_location -> FROM URL COMMA . SELECTOR
+
+    SELECTOR        shift and go to state 34
+
+
+state 25
+
+    (3) scrape -> SCRAPE categories location response . page manipulation sorting plot
+    (14) page -> . PAGE EQUALS SELECTOR
+    (15) page -> .
+
+    PAGE            shift and go to state 36
+    WHERE           reduce using rule 15 (page -> .)
+    ORDER_BY        reduce using rule 15 (page -> .)
+    BAR_PLOT        reduce using rule 15 (page -> .)
+    LINE_PLOT       reduce using rule 15 (page -> .)
+    $end            reduce using rule 15 (page -> .)
+
+    page                           shift and go to state 35
+
+state 26
+
+    (13) response -> RESPONSE . EQUALS SELECTOR
+
+    EQUALS          shift and go to state 37
+
+
+state 27
+
+    (11) location -> FROM URL .
+
+    RESPONSE        reduce using rule 11 (location -> FROM URL .)
+
+
+state 28
+
+    (8) categories -> category COMMA categories .
+
+    FROM            reduce using rule 8 (categories -> category COMMA categories .)
+    RESPONSE        reduce using rule 8 (categories -> category COMMA categories .)
+
+
+state 29
+
+    (9) category -> FIELD COLON SELECTOR . MODIFIER
+    (10) category -> FIELD COLON SELECTOR .
+
+    MODIFIER        shift and go to state 38
+    COMMA           reduce using rule 10 (category -> FIELD COLON SELECTOR .)
+    FROM            reduce using rule 10 (category -> FIELD COLON SELECTOR .)
+    RESPONSE        reduce using rule 10 (category -> FIELD COLON SELECTOR .)
+
+
+state 30
+
+    (4) scrape -> location SCRAPE categories response . page manipulation sorting plot
+    (14) page -> . PAGE EQUALS SELECTOR
+    (15) page -> .
+
+    PAGE            shift and go to state 36
+    WHERE           reduce using rule 15 (page -> .)
+    ORDER_BY        reduce using rule 15 (page -> .)
+    BAR_PLOT        reduce using rule 15 (page -> .)
+    LINE_PLOT       reduce using rule 15 (page -> .)
+    $end            reduce using rule 15 (page -> .)
+
+    page                           shift and go to state 39
+
+state 31
+
+    (5) crawl -> CRAWL categories crawl_location response . instructions manipulation sorting plot
+    (16) instructions -> . RULES_LABEL EQUALS L_BRACKET rules R_BRACKET
+
+    RULES_LABEL     shift and go to state 41
+
+    instructions                   shift and go to state 40
+
+state 32
+
+    (12) crawl_location -> FROM URL . COMMA SELECTOR
+
+    COMMA           shift and go to state 24
+
+
+state 33
+
+    (6) crawl -> crawl_location CRAWL categories response . instructions manipulation sorting plot
+    (16) instructions -> . RULES_LABEL EQUALS L_BRACKET rules R_BRACKET
+
+    RULES_LABEL     shift and go to state 41
+
+    instructions                   shift and go to state 42
+
+state 34
+
+    (12) crawl_location -> FROM URL COMMA SELECTOR .
+
+    CRAWL           reduce using rule 12 (crawl_location -> FROM URL COMMA SELECTOR .)
+    RESPONSE        reduce using rule 12 (crawl_location -> FROM URL COMMA SELECTOR .)
+
+
+state 35
+
+    (3) scrape -> SCRAPE categories location response page . manipulation sorting plot
+    (19) manipulation -> . filtering aggregation
+    (20) manipulation -> . filtering
+    (21) manipulation -> .
+    (22) filtering -> . WHERE conditions
+
+    ORDER_BY        reduce using rule 21 (manipulation -> .)
+    BAR_PLOT        reduce using rule 21 (manipulation -> .)
+    LINE_PLOT       reduce using rule 21 (manipulation -> .)
+    $end            reduce using rule 21 (manipulation -> .)
+    WHERE           shift and go to state 45
+
+    manipulation                   shift and go to state 43
+    filtering                      shift and go to state 44
+
+state 36
+
+    (14) page -> PAGE . EQUALS SELECTOR
+
+    EQUALS          shift and go to state 46
+
+
+state 37
+
+    (13) response -> RESPONSE EQUALS . SELECTOR
+
+    SELECTOR        shift and go to state 47
+
+
+state 38
+
+    (9) category -> FIELD COLON SELECTOR MODIFIER .
+
+    COMMA           reduce using rule 9 (category -> FIELD COLON SELECTOR MODIFIER .)
+    FROM            reduce using rule 9 (category -> FIELD COLON SELECTOR MODIFIER .)
+    RESPONSE        reduce using rule 9 (category -> FIELD COLON SELECTOR MODIFIER .)
+
+
+state 39
+
+    (4) scrape -> location SCRAPE categories response page . manipulation sorting plot
+    (19) manipulation -> . filtering aggregation
+    (20) manipulation -> . filtering
+    (21) manipulation -> .
+    (22) filtering -> . WHERE conditions
+
+    ORDER_BY        reduce using rule 21 (manipulation -> .)
+    BAR_PLOT        reduce using rule 21 (manipulation -> .)
+    LINE_PLOT       reduce using rule 21 (manipulation -> .)
+    $end            reduce using rule 21 (manipulation -> .)
+    WHERE           shift and go to state 45
+
+    manipulation                   shift and go to state 48
+    filtering                      shift and go to state 44
+
+state 40
+
+    (5) crawl -> CRAWL categories crawl_location response instructions . manipulation sorting plot
+    (19) manipulation -> . filtering aggregation
+    (20) manipulation -> . filtering
+    (21) manipulation -> .
+    (22) filtering -> . WHERE conditions
+
+    ORDER_BY        reduce using rule 21 (manipulation -> .)
+    BAR_PLOT        reduce using rule 21 (manipulation -> .)
+    LINE_PLOT       reduce using rule 21 (manipulation -> .)
+    $end            reduce using rule 21 (manipulation -> .)
+    WHERE           shift and go to state 45
+
+    manipulation                   shift and go to state 49
+    filtering                      shift and go to state 44
+
+state 41
+
+    (16) instructions -> RULES_LABEL . EQUALS L_BRACKET rules R_BRACKET
+
+    EQUALS          shift and go to state 50
+
+
+state 42
+
+    (6) crawl -> crawl_location CRAWL categories response instructions . manipulation sorting plot
+    (19) manipulation -> . filtering aggregation
+    (20) manipulation -> . filtering
+    (21) manipulation -> .
+    (22) filtering -> . WHERE conditions
+
+    ORDER_BY        reduce using rule 21 (manipulation -> .)
+    BAR_PLOT        reduce using rule 21 (manipulation -> .)
+    LINE_PLOT       reduce using rule 21 (manipulation -> .)
+    $end            reduce using rule 21 (manipulation -> .)
+    WHERE           shift and go to state 45
+
+    manipulation                   shift and go to state 51
+    filtering                      shift and go to state 44
+
+state 43
+
+    (3) scrape -> SCRAPE categories location response page manipulation . sorting plot
+    (42) sorting -> . ORDER_BY COLUMN
+    (43) sorting -> . ORDER_BY COLUMN DESCENDING
+    (44) sorting -> .
+
+    ORDER_BY        shift and go to state 53
+    BAR_PLOT        reduce using rule 44 (sorting -> .)
+    LINE_PLOT       reduce using rule 44 (sorting -> .)
+    $end            reduce using rule 44 (sorting -> .)
+
+    sorting                        shift and go to state 52
+
+state 44
+
+    (19) manipulation -> filtering . aggregation
+    (20) manipulation -> filtering .
+    (35) aggregation -> . GROUP_BY COLUMN
+    (36) aggregation -> . GROUP_BY COLUMN HAVING aggregate
+    (37) aggregation -> . GROUP_BY COLUMN HAVING aggregate operator INTEGER
+    (38) aggregation -> . GROUP_BY COLUMN HAVING aggregate operator FLOAT
+
+    ORDER_BY        reduce using rule 20 (manipulation -> filtering .)
+    BAR_PLOT        reduce using rule 20 (manipulation -> filtering .)
+    LINE_PLOT       reduce using rule 20 (manipulation -> filtering .)
+    $end            reduce using rule 20 (manipulation -> filtering .)
+    GROUP_BY        shift and go to state 55
+
+    aggregation                    shift and go to state 54
+
+state 45
+
+    (22) filtering -> WHERE . conditions
+    (23) conditions -> . condition
+    (24) conditions -> . condition AND conditions
+    (25) conditions -> . condition OR conditions
+    (26) condition -> . COLUMN operator INTEGER
+    (27) condition -> . COLUMN operator FLOAT
+    (28) condition -> . COLUMN EQUALS SELECTOR
+
+    COLUMN          shift and go to state 58
+
+    conditions                     shift and go to state 56
+    condition                      shift and go to state 57
+
+state 46
+
+    (14) page -> PAGE EQUALS . SELECTOR
+
+    SELECTOR        shift and go to state 59
+
+
+state 47
+
+    (13) response -> RESPONSE EQUALS SELECTOR .
+
+    PAGE            reduce using rule 13 (response -> RESPONSE EQUALS SELECTOR .)
+    WHERE           reduce using rule 13 (response -> RESPONSE EQUALS SELECTOR .)
+    ORDER_BY        reduce using rule 13 (response -> RESPONSE EQUALS SELECTOR .)
+    BAR_PLOT        reduce using rule 13 (response -> RESPONSE EQUALS SELECTOR .)
+    LINE_PLOT       reduce using rule 13 (response -> RESPONSE EQUALS SELECTOR .)
+    $end            reduce using rule 13 (response -> RESPONSE EQUALS SELECTOR .)
+    RULES_LABEL     reduce using rule 13 (response -> RESPONSE EQUALS SELECTOR .)
+
+
+state 48
+
+    (4) scrape -> location SCRAPE categories response page manipulation . sorting plot
+    (42) sorting -> . ORDER_BY COLUMN
+    (43) sorting -> . ORDER_BY COLUMN DESCENDING
+    (44) sorting -> .
+
+    ORDER_BY        shift and go to state 53
+    BAR_PLOT        reduce using rule 44 (sorting -> .)
+    LINE_PLOT       reduce using rule 44 (sorting -> .)
+    $end            reduce using rule 44 (sorting -> .)
+
+    sorting                        shift and go to state 60
+
+state 49
+
+    (5) crawl -> CRAWL categories crawl_location response instructions manipulation . sorting plot
+    (42) sorting -> . ORDER_BY COLUMN
+    (43) sorting -> . ORDER_BY COLUMN DESCENDING
+    (44) sorting -> .
+
+    ORDER_BY        shift and go to state 53
+    BAR_PLOT        reduce using rule 44 (sorting -> .)
+    LINE_PLOT       reduce using rule 44 (sorting -> .)
+    $end            reduce using rule 44 (sorting -> .)
+
+    sorting                        shift and go to state 61
+
+state 50
+
+    (16) instructions -> RULES_LABEL EQUALS . L_BRACKET rules R_BRACKET
+
+    L_BRACKET       shift and go to state 62
+
+
+state 51
+
+    (6) crawl -> crawl_location CRAWL categories response instructions manipulation . sorting plot
+    (42) sorting -> . ORDER_BY COLUMN
+    (43) sorting -> . ORDER_BY COLUMN DESCENDING
+    (44) sorting -> .
+
+    ORDER_BY        shift and go to state 53
+    BAR_PLOT        reduce using rule 44 (sorting -> .)
+    LINE_PLOT       reduce using rule 44 (sorting -> .)
+    $end            reduce using rule 44 (sorting -> .)
+
+    sorting                        shift and go to state 63
+
+state 52
+
+    (3) scrape -> SCRAPE categories location response page manipulation sorting . plot
+    (45) plot -> . BAR_PLOT x_axis COMMA y_axis
+    (46) plot -> . LINE_PLOT x_axis COMMA y_axis
+    (47) plot -> .
+
+    BAR_PLOT        shift and go to state 65
+    LINE_PLOT       shift and go to state 66
+    $end            reduce using rule 47 (plot -> .)
+
+    plot                           shift and go to state 64
+
+state 53
+
+    (42) sorting -> ORDER_BY . COLUMN
+    (43) sorting -> ORDER_BY . COLUMN DESCENDING
+
+    COLUMN          shift and go to state 67
+
+
+state 54
+
+    (19) manipulation -> filtering aggregation .
+
+    ORDER_BY        reduce using rule 19 (manipulation -> filtering aggregation .)
+    BAR_PLOT        reduce using rule 19 (manipulation -> filtering aggregation .)
+    LINE_PLOT       reduce using rule 19 (manipulation -> filtering aggregation .)
+    $end            reduce using rule 19 (manipulation -> filtering aggregation .)
+
+
+state 55
+
+    (35) aggregation -> GROUP_BY . COLUMN
+    (36) aggregation -> GROUP_BY . COLUMN HAVING aggregate
+    (37) aggregation -> GROUP_BY . COLUMN HAVING aggregate operator INTEGER
+    (38) aggregation -> GROUP_BY . COLUMN HAVING aggregate operator FLOAT
+
+    COLUMN          shift and go to state 68
+
+
+state 56
+
+    (22) filtering -> WHERE conditions .
+
+    GROUP_BY        reduce using rule 22 (filtering -> WHERE conditions .)
+    ORDER_BY        reduce using rule 22 (filtering -> WHERE conditions .)
+    BAR_PLOT        reduce using rule 22 (filtering -> WHERE conditions .)
+    LINE_PLOT       reduce using rule 22 (filtering -> WHERE conditions .)
+    $end            reduce using rule 22 (filtering -> WHERE conditions .)
+
+
+state 57
+
+    (23) conditions -> condition .
+    (24) conditions -> condition . AND conditions
+    (25) conditions -> condition . OR conditions
+
+    GROUP_BY        reduce using rule 23 (conditions -> condition .)
+    ORDER_BY        reduce using rule 23 (conditions -> condition .)
+    BAR_PLOT        reduce using rule 23 (conditions -> condition .)
+    LINE_PLOT       reduce using rule 23 (conditions -> condition .)
+    $end            reduce using rule 23 (conditions -> condition .)
+    AND             shift and go to state 69
+    OR              shift and go to state 70
+
+
+state 58
+
+    (26) condition -> COLUMN . operator INTEGER
+    (27) condition -> COLUMN . operator FLOAT
+    (28) condition -> COLUMN . EQUALS SELECTOR
+    (29) operator -> . EQUALS
+    (30) operator -> . GREATER
+    (31) operator -> . LESS
+    (32) operator -> . GREATER_EQUAL
+    (33) operator -> . LESS_EQUAL
+    (34) operator -> . NOT_EQUAL
+
+    EQUALS          shift and go to state 72
+    GREATER         shift and go to state 73
+    LESS            shift and go to state 74
+    GREATER_EQUAL   shift and go to state 75
+    LESS_EQUAL      shift and go to state 76
+    NOT_EQUAL       shift and go to state 77
+
+    operator                       shift and go to state 71
+
+state 59
+
+    (14) page -> PAGE EQUALS SELECTOR .
+
+    WHERE           reduce using rule 14 (page -> PAGE EQUALS SELECTOR .)
+    ORDER_BY        reduce using rule 14 (page -> PAGE EQUALS SELECTOR .)
+    BAR_PLOT        reduce using rule 14 (page -> PAGE EQUALS SELECTOR .)
+    LINE_PLOT       reduce using rule 14 (page -> PAGE EQUALS SELECTOR .)
+    $end            reduce using rule 14 (page -> PAGE EQUALS SELECTOR .)
+
+
+state 60
+
+    (4) scrape -> location SCRAPE categories response page manipulation sorting . plot
+    (45) plot -> . BAR_PLOT x_axis COMMA y_axis
+    (46) plot -> . LINE_PLOT x_axis COMMA y_axis
+    (47) plot -> .
+
+    BAR_PLOT        shift and go to state 65
+    LINE_PLOT       shift and go to state 66
+    $end            reduce using rule 47 (plot -> .)
+
+    plot                           shift and go to state 78
+
+state 61
+
+    (5) crawl -> CRAWL categories crawl_location response instructions manipulation sorting . plot
+    (45) plot -> . BAR_PLOT x_axis COMMA y_axis
+    (46) plot -> . LINE_PLOT x_axis COMMA y_axis
+    (47) plot -> .
+
+    BAR_PLOT        shift and go to state 65
+    LINE_PLOT       shift and go to state 66
+    $end            reduce using rule 47 (plot -> .)
+
+    plot                           shift and go to state 79
+
+state 62
+
+    (16) instructions -> RULES_LABEL EQUALS L_BRACKET . rules R_BRACKET
+    (17) rules -> . RULE
+    (18) rules -> . RULE COMMA rules
+
+    RULE            shift and go to state 81
+
+    rules                          shift and go to state 80
+
+state 63
+
+    (6) crawl -> crawl_location CRAWL categories response instructions manipulation sorting . plot
+    (45) plot -> . BAR_PLOT x_axis COMMA y_axis
+    (46) plot -> . LINE_PLOT x_axis COMMA y_axis
+    (47) plot -> .
+
+    BAR_PLOT        shift and go to state 65
+    LINE_PLOT       shift and go to state 66
+    $end            reduce using rule 47 (plot -> .)
+
+    plot                           shift and go to state 82
+
+state 64
+
+    (3) scrape -> SCRAPE categories location response page manipulation sorting plot .
+
+    $end            reduce using rule 3 (scrape -> SCRAPE categories location response page manipulation sorting plot .)
+
+
+state 65
+
+    (45) plot -> BAR_PLOT . x_axis COMMA y_axis
+    (48) x_axis -> . X MODIFIER
+
+    X               shift and go to state 84
+
+    x_axis                         shift and go to state 83
+
+state 66
+
+    (46) plot -> LINE_PLOT . x_axis COMMA y_axis
+    (48) x_axis -> . X MODIFIER
+
+    X               shift and go to state 84
+
+    x_axis                         shift and go to state 85
+
+state 67
+
+    (42) sorting -> ORDER_BY COLUMN .
+    (43) sorting -> ORDER_BY COLUMN . DESCENDING
+
+    BAR_PLOT        reduce using rule 42 (sorting -> ORDER_BY COLUMN .)
+    LINE_PLOT       reduce using rule 42 (sorting -> ORDER_BY COLUMN .)
+    $end            reduce using rule 42 (sorting -> ORDER_BY COLUMN .)
+    DESCENDING      shift and go to state 86
+
+
+state 68
+
+    (35) aggregation -> GROUP_BY COLUMN .
+    (36) aggregation -> GROUP_BY COLUMN . HAVING aggregate
+    (37) aggregation -> GROUP_BY COLUMN . HAVING aggregate operator INTEGER
+    (38) aggregation -> GROUP_BY COLUMN . HAVING aggregate operator FLOAT
+
+    ORDER_BY        reduce using rule 35 (aggregation -> GROUP_BY COLUMN .)
+    BAR_PLOT        reduce using rule 35 (aggregation -> GROUP_BY COLUMN .)
+    LINE_PLOT       reduce using rule 35 (aggregation -> GROUP_BY COLUMN .)
+    $end            reduce using rule 35 (aggregation -> GROUP_BY COLUMN .)
+    HAVING          shift and go to state 87
+
+
+state 69
+
+    (24) conditions -> condition AND . conditions
+    (23) conditions -> . condition
+    (24) conditions -> . condition AND conditions
+    (25) conditions -> . condition OR conditions
+    (26) condition -> . COLUMN operator INTEGER
+    (27) condition -> . COLUMN operator FLOAT
+    (28) condition -> . COLUMN EQUALS SELECTOR
+
+    COLUMN          shift and go to state 58
+
+    condition                      shift and go to state 57
+    conditions                     shift and go to state 88
+
+state 70
+
+    (25) conditions -> condition OR . conditions
+    (23) conditions -> . condition
+    (24) conditions -> . condition AND conditions
+    (25) conditions -> . condition OR conditions
+    (26) condition -> . COLUMN operator INTEGER
+    (27) condition -> . COLUMN operator FLOAT
+    (28) condition -> . COLUMN EQUALS SELECTOR
+
+    COLUMN          shift and go to state 58
+
+    condition                      shift and go to state 57
+    conditions                     shift and go to state 89
+
+state 71
+
+    (26) condition -> COLUMN operator . INTEGER
+    (27) condition -> COLUMN operator . FLOAT
+
+    INTEGER         shift and go to state 90
+    FLOAT           shift and go to state 91
+
+
+state 72
+
+    (28) condition -> COLUMN EQUALS . SELECTOR
+    (29) operator -> EQUALS .
+
+    SELECTOR        shift and go to state 92
+    INTEGER         reduce using rule 29 (operator -> EQUALS .)
+    FLOAT           reduce using rule 29 (operator -> EQUALS .)
+
+
+state 73
+
+    (30) operator -> GREATER .
+
+    INTEGER         reduce using rule 30 (operator -> GREATER .)
+    FLOAT           reduce using rule 30 (operator -> GREATER .)
+
+
+state 74
+
+    (31) operator -> LESS .
+
+    INTEGER         reduce using rule 31 (operator -> LESS .)
+    FLOAT           reduce using rule 31 (operator -> LESS .)
+
+
+state 75
+
+    (32) operator -> GREATER_EQUAL .
+
+    INTEGER         reduce using rule 32 (operator -> GREATER_EQUAL .)
+    FLOAT           reduce using rule 32 (operator -> GREATER_EQUAL .)
+
+
+state 76
+
+    (33) operator -> LESS_EQUAL .
+
+    INTEGER         reduce using rule 33 (operator -> LESS_EQUAL .)
+    FLOAT           reduce using rule 33 (operator -> LESS_EQUAL .)
+
+
+state 77
+
+    (34) operator -> NOT_EQUAL .
+
+    INTEGER         reduce using rule 34 (operator -> NOT_EQUAL .)
+    FLOAT           reduce using rule 34 (operator -> NOT_EQUAL .)
+
+
+state 78
+
+    (4) scrape -> location SCRAPE categories response page manipulation sorting plot .
+
+    $end            reduce using rule 4 (scrape -> location SCRAPE categories response page manipulation sorting plot .)
+
+
+state 79
+
+    (5) crawl -> CRAWL categories crawl_location response instructions manipulation sorting plot .
+
+    $end            reduce using rule 5 (crawl -> CRAWL categories crawl_location response instructions manipulation sorting plot .)
+
+
+state 80
+
+    (16) instructions -> RULES_LABEL EQUALS L_BRACKET rules . R_BRACKET
+
+    R_BRACKET       shift and go to state 93
+
+
+state 81
+
+    (17) rules -> RULE .
+    (18) rules -> RULE . COMMA rules
+
+    R_BRACKET       reduce using rule 17 (rules -> RULE .)
+    COMMA           shift and go to state 94
+
+
+state 82
+
+    (6) crawl -> crawl_location CRAWL categories response instructions manipulation sorting plot .
+
+    $end            reduce using rule 6 (crawl -> crawl_location CRAWL categories response instructions manipulation sorting plot .)
+
+
+state 83
+
+    (45) plot -> BAR_PLOT x_axis . COMMA y_axis
+
+    COMMA           shift and go to state 95
+
+
+state 84
+
+    (48) x_axis -> X . MODIFIER
+
+    MODIFIER        shift and go to state 96
+
+
+state 85
+
+    (46) plot -> LINE_PLOT x_axis . COMMA y_axis
+
+    COMMA           shift and go to state 97
+
+
+state 86
+
+    (43) sorting -> ORDER_BY COLUMN DESCENDING .
+
+    BAR_PLOT        reduce using rule 43 (sorting -> ORDER_BY COLUMN DESCENDING .)
+    LINE_PLOT       reduce using rule 43 (sorting -> ORDER_BY COLUMN DESCENDING .)
+    $end            reduce using rule 43 (sorting -> ORDER_BY COLUMN DESCENDING .)
+
+
+state 87
+
+    (36) aggregation -> GROUP_BY COLUMN HAVING . aggregate
+    (37) aggregation -> GROUP_BY COLUMN HAVING . aggregate operator INTEGER
+    (38) aggregation -> GROUP_BY COLUMN HAVING . aggregate operator FLOAT
+    (39) aggregate -> . AVERAGE
+    (40) aggregate -> . SUM
+    (41) aggregate -> . COUNT
+
+    AVERAGE         shift and go to state 99
+    SUM             shift and go to state 100
+    COUNT           shift and go to state 101
+
+    aggregate                      shift and go to state 98
+
+state 88
+
+    (24) conditions -> condition AND conditions .
+
+    GROUP_BY        reduce using rule 24 (conditions -> condition AND conditions .)
+    ORDER_BY        reduce using rule 24 (conditions -> condition AND conditions .)
+    BAR_PLOT        reduce using rule 24 (conditions -> condition AND conditions .)
+    LINE_PLOT       reduce using rule 24 (conditions -> condition AND conditions .)
+    $end            reduce using rule 24 (conditions -> condition AND conditions .)
+
+
+state 89
+
+    (25) conditions -> condition OR conditions .
+
+    GROUP_BY        reduce using rule 25 (conditions -> condition OR conditions .)
+    ORDER_BY        reduce using rule 25 (conditions -> condition OR conditions .)
+    BAR_PLOT        reduce using rule 25 (conditions -> condition OR conditions .)
+    LINE_PLOT       reduce using rule 25 (conditions -> condition OR conditions .)
+    $end            reduce using rule 25 (conditions -> condition OR conditions .)
+
+
+state 90
+
+    (26) condition -> COLUMN operator INTEGER .
+
+    AND             reduce using rule 26 (condition -> COLUMN operator INTEGER .)
+    OR              reduce using rule 26 (condition -> COLUMN operator INTEGER .)
+    GROUP_BY        reduce using rule 26 (condition -> COLUMN operator INTEGER .)
+    ORDER_BY        reduce using rule 26 (condition -> COLUMN operator INTEGER .)
+    BAR_PLOT        reduce using rule 26 (condition -> COLUMN operator INTEGER .)
+    LINE_PLOT       reduce using rule 26 (condition -> COLUMN operator INTEGER .)
+    $end            reduce using rule 26 (condition -> COLUMN operator INTEGER .)
+
+
+state 91
+
+    (27) condition -> COLUMN operator FLOAT .
+
+    AND             reduce using rule 27 (condition -> COLUMN operator FLOAT .)
+    OR              reduce using rule 27 (condition -> COLUMN operator FLOAT .)
+    GROUP_BY        reduce using rule 27 (condition -> COLUMN operator FLOAT .)
+    ORDER_BY        reduce using rule 27 (condition -> COLUMN operator FLOAT .)
+    BAR_PLOT        reduce using rule 27 (condition -> COLUMN operator FLOAT .)
+    LINE_PLOT       reduce using rule 27 (condition -> COLUMN operator FLOAT .)
+    $end            reduce using rule 27 (condition -> COLUMN operator FLOAT .)
+
+
+state 92
+
+    (28) condition -> COLUMN EQUALS SELECTOR .
+
+    AND             reduce using rule 28 (condition -> COLUMN EQUALS SELECTOR .)
+    OR              reduce using rule 28 (condition -> COLUMN EQUALS SELECTOR .)
+    GROUP_BY        reduce using rule 28 (condition -> COLUMN EQUALS SELECTOR .)
+    ORDER_BY        reduce using rule 28 (condition -> COLUMN EQUALS SELECTOR .)
+    BAR_PLOT        reduce using rule 28 (condition -> COLUMN EQUALS SELECTOR .)
+    LINE_PLOT       reduce using rule 28 (condition -> COLUMN EQUALS SELECTOR .)
+    $end            reduce using rule 28 (condition -> COLUMN EQUALS SELECTOR .)
+
+
+state 93
+
+    (16) instructions -> RULES_LABEL EQUALS L_BRACKET rules R_BRACKET .
+
+    WHERE           reduce using rule 16 (instructions -> RULES_LABEL EQUALS L_BRACKET rules R_BRACKET .)
+    ORDER_BY        reduce using rule 16 (instructions -> RULES_LABEL EQUALS L_BRACKET rules R_BRACKET .)
+    BAR_PLOT        reduce using rule 16 (instructions -> RULES_LABEL EQUALS L_BRACKET rules R_BRACKET .)
+    LINE_PLOT       reduce using rule 16 (instructions -> RULES_LABEL EQUALS L_BRACKET rules R_BRACKET .)
+    $end            reduce using rule 16 (instructions -> RULES_LABEL EQUALS L_BRACKET rules R_BRACKET .)
+
+
+state 94
+
+    (18) rules -> RULE COMMA . rules
+    (17) rules -> . RULE
+    (18) rules -> . RULE COMMA rules
+
+    RULE            shift and go to state 81
+
+    rules                          shift and go to state 102
+
+state 95
+
+    (45) plot -> BAR_PLOT x_axis COMMA . y_axis
+    (49) y_axis -> . Y MODIFIER
+
+    Y               shift and go to state 104
+
+    y_axis                         shift and go to state 103
+
+state 96
+
+    (48) x_axis -> X MODIFIER .
+
+    COMMA           reduce using rule 48 (x_axis -> X MODIFIER .)
+
+
+state 97
+
+    (46) plot -> LINE_PLOT x_axis COMMA . y_axis
+    (49) y_axis -> . Y MODIFIER
+
+    Y               shift and go to state 104
+
+    y_axis                         shift and go to state 105
+
+state 98
+
+    (36) aggregation -> GROUP_BY COLUMN HAVING aggregate .
+    (37) aggregation -> GROUP_BY COLUMN HAVING aggregate . operator INTEGER
+    (38) aggregation -> GROUP_BY COLUMN HAVING aggregate . operator FLOAT
+    (29) operator -> . EQUALS
+    (30) operator -> . GREATER
+    (31) operator -> . LESS
+    (32) operator -> . GREATER_EQUAL
+    (33) operator -> . LESS_EQUAL
+    (34) operator -> . NOT_EQUAL
+
+    ORDER_BY        reduce using rule 36 (aggregation -> GROUP_BY COLUMN HAVING aggregate .)
+    BAR_PLOT        reduce using rule 36 (aggregation -> GROUP_BY COLUMN HAVING aggregate .)
+    LINE_PLOT       reduce using rule 36 (aggregation -> GROUP_BY COLUMN HAVING aggregate .)
+    $end            reduce using rule 36 (aggregation -> GROUP_BY COLUMN HAVING aggregate .)
+    EQUALS          shift and go to state 107
+    GREATER         shift and go to state 73
+    LESS            shift and go to state 74
+    GREATER_EQUAL   shift and go to state 75
+    LESS_EQUAL      shift and go to state 76
+    NOT_EQUAL       shift and go to state 77
+
+    operator                       shift and go to state 106
+
+state 99
+
+    (39) aggregate -> AVERAGE .
+
+    EQUALS          reduce using rule 39 (aggregate -> AVERAGE .)
+    GREATER         reduce using rule 39 (aggregate -> AVERAGE .)
+    LESS            reduce using rule 39 (aggregate -> AVERAGE .)
+    GREATER_EQUAL   reduce using rule 39 (aggregate -> AVERAGE .)
+    LESS_EQUAL      reduce using rule 39 (aggregate -> AVERAGE .)
+    NOT_EQUAL       reduce using rule 39 (aggregate -> AVERAGE .)
+    ORDER_BY        reduce using rule 39 (aggregate -> AVERAGE .)
+    BAR_PLOT        reduce using rule 39 (aggregate -> AVERAGE .)
+    LINE_PLOT       reduce using rule 39 (aggregate -> AVERAGE .)
+    $end            reduce using rule 39 (aggregate -> AVERAGE .)
+
+
+state 100
+
+    (40) aggregate -> SUM .
+
+    EQUALS          reduce using rule 40 (aggregate -> SUM .)
+    GREATER         reduce using rule 40 (aggregate -> SUM .)
+    LESS            reduce using rule 40 (aggregate -> SUM .)
+    GREATER_EQUAL   reduce using rule 40 (aggregate -> SUM .)
+    LESS_EQUAL      reduce using rule 40 (aggregate -> SUM .)
+    NOT_EQUAL       reduce using rule 40 (aggregate -> SUM .)
+    ORDER_BY        reduce using rule 40 (aggregate -> SUM .)
+    BAR_PLOT        reduce using rule 40 (aggregate -> SUM .)
+    LINE_PLOT       reduce using rule 40 (aggregate -> SUM .)
+    $end            reduce using rule 40 (aggregate -> SUM .)
+
+
+state 101
+
+    (41) aggregate -> COUNT .
+
+    EQUALS          reduce using rule 41 (aggregate -> COUNT .)
+    GREATER         reduce using rule 41 (aggregate -> COUNT .)
+    LESS            reduce using rule 41 (aggregate -> COUNT .)
+    GREATER_EQUAL   reduce using rule 41 (aggregate -> COUNT .)
+    LESS_EQUAL      reduce using rule 41 (aggregate -> COUNT .)
+    NOT_EQUAL       reduce using rule 41 (aggregate -> COUNT .)
+    ORDER_BY        reduce using rule 41 (aggregate -> COUNT .)
+    BAR_PLOT        reduce using rule 41 (aggregate -> COUNT .)
+    LINE_PLOT       reduce using rule 41 (aggregate -> COUNT .)
+    $end            reduce using rule 41 (aggregate -> COUNT .)
+
+
+state 102
+
+    (18) rules -> RULE COMMA rules .
+
+    R_BRACKET       reduce using rule 18 (rules -> RULE COMMA rules .)
+
+
+state 103
+
+    (45) plot -> BAR_PLOT x_axis COMMA y_axis .
+
+    $end            reduce using rule 45 (plot -> BAR_PLOT x_axis COMMA y_axis .)
+
+
+state 104
+
+    (49) y_axis -> Y . MODIFIER
+
+    MODIFIER        shift and go to state 108
+
+
+state 105
+
+    (46) plot -> LINE_PLOT x_axis COMMA y_axis .
+
+    $end            reduce using rule 46 (plot -> LINE_PLOT x_axis COMMA y_axis .)
+
+
+state 106
+
+    (37) aggregation -> GROUP_BY COLUMN HAVING aggregate operator . INTEGER
+    (38) aggregation -> GROUP_BY COLUMN HAVING aggregate operator . FLOAT
+
+    INTEGER         shift and go to state 109
+    FLOAT           shift and go to state 110
+
+
+state 107
+
+    (29) operator -> EQUALS .
+
+    INTEGER         reduce using rule 29 (operator -> EQUALS .)
+    FLOAT           reduce using rule 29 (operator -> EQUALS .)
+
+
+state 108
+
+    (49) y_axis -> Y MODIFIER .
+
+    $end            reduce using rule 49 (y_axis -> Y MODIFIER .)
+
+
+state 109
+
+    (37) aggregation -> GROUP_BY COLUMN HAVING aggregate operator INTEGER .
+
+    ORDER_BY        reduce using rule 37 (aggregation -> GROUP_BY COLUMN HAVING aggregate operator INTEGER .)
+    BAR_PLOT        reduce using rule 37 (aggregation -> GROUP_BY COLUMN HAVING aggregate operator INTEGER .)
+    LINE_PLOT       reduce using rule 37 (aggregation -> GROUP_BY COLUMN HAVING aggregate operator INTEGER .)
+    $end            reduce using rule 37 (aggregation -> GROUP_BY COLUMN HAVING aggregate operator INTEGER .)
+
+
+state 110
+
+    (38) aggregation -> GROUP_BY COLUMN HAVING aggregate operator FLOAT .
+
+    ORDER_BY        reduce using rule 38 (aggregation -> GROUP_BY COLUMN HAVING aggregate operator FLOAT .)
+    BAR_PLOT        reduce using rule 38 (aggregation -> GROUP_BY COLUMN HAVING aggregate operator FLOAT .)
+    LINE_PLOT       reduce using rule 38 (aggregation -> GROUP_BY COLUMN HAVING aggregate operator FLOAT .)
+    $end            reduce using rule 38 (aggregation -> GROUP_BY COLUMN HAVING aggregate operator FLOAT .)
+
