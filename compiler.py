@@ -203,6 +203,9 @@ class Sorter:
     aggregate_value = []
     order = ''
     ascending = True
+    plot_type = ''
+    x_axis = []
+    y_axis = []
 
 
     def __init__(self, tokens):
@@ -280,23 +283,28 @@ class Sorter:
                 self.order = self.tokens[token].value.strip('[]')
             if self.tokens[token].type == 'DESCENDING':
                 self.ascending = False
+            if self.tokens[token].type == 'BAR_PLOT':
+                self.plot_type = self.tokens[token].type
+            if self.tokens[token - 1].type == 'X' and self.tokens[token].type == 'MODIFIER':
+                self.x_axis.append(self.tokens[token].value.strip('()'))
+            if self.tokens[token - 1].type == 'Y' and self.tokens[token].type == 'MODIFIER':
+                self.y_axis.append(self.tokens[token].value.strip('()'))
 
-
-
-#with open('src.dsl', 'r') as file:
-#    query = file.read().replace('\n', ' ')
-
-
-#l = MyLexer(query)
-#l.build()
-#l.test()
-
-#p = MyParser(l, l.tokens)
-
-#p.build()
-
-#p.parser.parse(query)
 '''
+with open('src.dsl', 'r') as file:
+    query = file.read().replace('\n', ' ')
+
+
+l = MyLexer(query)
+l.build()
+l.test()
+
+p = MyParser(l, l.tokens)
+
+p.build()
+
+p.parser.parse(query)
+
 s = Sorter(l.t)
 s.sort()
 
@@ -320,7 +328,11 @@ print('s aggregate_operators', s.aggregate_operators)
 print('s aggregate_value', s.aggregate_value)
 print('s order', s.order)
 print('s ascending', s.ascending)
+print('s plot type', s.plot_type)
+print('s x_axis', s.x_axis)
+print('s y_axis', s.y_axis)
 '''
+
 
 
 

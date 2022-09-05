@@ -23,6 +23,9 @@ class Reader:
     aggregate_value = []
     order = ''
     ascending = bool
+    plot_type = ''
+    x_axis = []
+    y_axis = []
 
     def read(self):
         with open('src.dsl', 'r') as file:
@@ -58,6 +61,9 @@ class Reader:
         self.aggregate_value = sorter.aggregate_value
         self.order = sorter.order
         self.ascending = sorter.ascending
+        self.plot_type = sorter.plot_type
+        self.x_axis = sorter.x_axis
+        self.y_axis = sorter.y_axis
 
 r = Reader()
 r.read()

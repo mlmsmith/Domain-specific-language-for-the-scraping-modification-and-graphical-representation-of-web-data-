@@ -2,6 +2,7 @@ from scrapy.crawler import CrawlerProcess
 from DSQLScraper.DSQLScraper.spiders.genericSpider import GenericSpider
 from DSQLScraper.DSQLScraper.spiders.crawlSpider import CrawlSpider
 from dataManipulation import dm
+from dataVisualisation import DataVisualisation
 import pandas as pd
 from reader import r
 
@@ -28,17 +29,6 @@ else:
 df = pd.read_csv('data.csv')
 filtered_data = dm.filter_data(df, r.where, r.operators, r.values)#, r.logical_operators)
 filtered_data.to_csv('data.csv')
-    #aggregated_data = dm.group_by_having(df, r.group_by, r.aggregate_function, r.aggregate_operators, r.aggregate_value)
-    #aggregated_data.to_csv('data.csv')
-    #sorted_data = dm.order_by(aggregated_data, r.order, r.ascending)
-    #sorted_data.to_csv('data.csv')
-
-
-'''
-df = pd.read_csv('data.csv')
-f = Filterer(df)
-filtered = f.concatinate_filters()
-filtered.to_csv('filtered.csv')
-'''
-
+dv = DataVisualisation(filtered_data, r.plot_type, r.x_axis, r.y_axis)
+dv.construct_plot()
 

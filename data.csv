@@ -1,42 +1,6 @@
-name,price
-"
-				
-		Simple					",80.0
-"
-				
-		Variable					",40.0
-"
-				
-		Configurable					",50.0
-"
-				
-		Downloadable					",30.0
-"
-				
-		Blender1					",110.0
-"
-				
-		Blender2					",150.0
-"
-				
-		Blender3					",79.0
-"
-				
-		Blender4					",110.0
-"
-				
-		T-Shirt1					",95.0
-name,price
-DJI Avata Pro-View Combo,1229.0
-DJI Mini 3 Pro Drone with RC Remote Controller,859.0
-DJI Avata Drone,499.0
-DJI FPV Combo,899.0
-DJI Mini 3 Pro Drone with RC-N1 Remote Controller,709.0
-DJI Mini 2 Combo Drone,549.0
-DJI Mini 2 Drone,419.0
-DJI Avata Fly Smart Combo,989.0
-DJI Air 2S Fly More Combo,1169.0
-DJI Mavic 3 Fly More Combo,2399.0
-DJI Mavic 3 Drone,1729.0
-DJI Mavic 3 Cine Premium Combo,4179.0
-DJI Air 2S Drone,899.0
+,Unnamed: 0.3,Unnamed: 0.2,Unnamed: 0.1,Unnamed: 0,name,price
+0,0,0,0.0,0.0,DJI Avata Pro-View Combo,1229.0
+1,1,1,1.0,8.0,DJI Air 2S Fly More Combo,1169.0
+2,2,2,2.0,9.0,DJI Mavic 3 Fly More Combo,2399.0
+3,3,3,3.0,10.0,DJI Mavic 3 Drone,1729.0
+4,4,4,4.0,11.0,DJI Mavic 3 Cine Premium Combo,4179.0
