@@ -9,6 +9,11 @@ from scrapy import signals
 from itemadapter import is_item, ItemAdapter
 
 
+class ShowRequestHeadersMiddleware:
+    def process_request(self, request, spider):
+        print(f'Request Headers: {request.headers}')
+
+
 class DsqlscraperSpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the

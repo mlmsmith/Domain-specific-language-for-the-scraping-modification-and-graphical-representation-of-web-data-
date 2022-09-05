@@ -13,80 +13,9 @@ having = 'avg'
 '''
 
 
-#df = pd.read_csv('data.csv')
-'''
-class Filterer:
-    filters = []
-
-    def __init__(self, data_frame):
-        self.data_frame = data_frame
-
-    def __filt(self, where, operator, value):
-        if operator == 'EQUALS':
-            return (self.data_frame[where] == value)
-        elif operator == 'GREATER':
-            return (self.data_frame[where] > value)
-        elif operator == 'LESS':
-            return (self.data_frame[where] < value)
-        elif operator == 'GREATER_EQUAL':
-            return (self.data_frame[where] >= value)
-        elif operator == 'LESS_EQUAL':
-            return (self.data_frame[where] <= value)
-        elif operator == 'NOT_EQUAL':
-            return (self.data_frame[where] != value)
-        #return new_data
-
-
-    def concatinate_filters(self):
-        for i in range(len(r.where)):
-            self.filters.append(self.__filt(r.where[i], r.operators[i], r.values[i]))
-        if len(self.filters) == 1:
-            return self.data_frame.loc[(self.filters[0])]
-        else:
-            if r.logical_operators[i - 1] == 'AND':
-                return self.data_frame.loc[np.logical_and.reduce(self.filters)]
-            elif r.logical_operators[i - 1] == 'OR':
-                return self.data_frame.loc[np.logical_or.reduce(self.filters)]
-
-    def group_by_having(self, data_frame, group_by2, having=None):
-        if having:
-            if having == 'AVG':
-                new_data_frame = data_frame.groupby(group_by2).mean()
-            elif having == 'SUM':
-                new_data_frame = data_frame.groupby(group_by2).sum()
-            elif having == 'COUNT':
-                new_data_frame = data_frame.groupby(group_by2).count()
-            if r.aggregate_operator != '':
-                if r.aggregate_operator == '==':
-                    new_data_frame = new_data_frame == r.aggregate_value[0]
-                elif r.aggregate_operator == '>':
-                    new_data_frame = new_data_frame > r.aggregate_value[0]
-                elif r.aggregate_operator == '<':
-                    new_data_frame = new_data_frame < r.aggregate_value[0]
-                elif r.aggregate_operator == '>=':
-                    new_data_frame = new_data_frame >= r.aggregate_value[0]
-                elif r.aggregate_operator == '<=':
-                    new_data_frame = new_data_frame <= r.aggregate_value[0]
-                elif r.aggregate_operator == '!=':
-                    new_data_frame = new_data_frame != r.aggregate_value[0]
-        else:
-            new_data_frame = data_frame.sort_values(group_by2)
-        return new_data_frame
-
-
-    def order_by(self, data_frame, column, ascending):
-        if not ascending:
-            ordered_data_frame = data_frame.sort_values(column, ascending=False)
-        else:
-            ordered_data_frame = data_frame.sort_values(column)
-        return ordered_data_frame
-
-'''
-
 class Data_minipulator:
 
     query = ''
-    #filters = []
 
     def is_number(self, str):
         try:

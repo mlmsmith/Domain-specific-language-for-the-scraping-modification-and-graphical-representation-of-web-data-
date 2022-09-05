@@ -17,7 +17,7 @@ class GenericSpider(scrapy.Spider):
             res = response.css
 
         for resp in res(r.response):
-            loader = ItemLoader(item=DsqlspiderItem(), selector=resp)
+            loader = ItemLoader(item=DsqlscraperItem(), selector=resp)
 
             for i in range(len(r.categories)):
                 loader.add_css(r.categories[i], r.selectors[i])

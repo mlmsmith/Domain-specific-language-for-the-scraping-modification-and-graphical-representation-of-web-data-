@@ -283,19 +283,19 @@ class Sorter:
 
 
 
-with open('src.dsl', 'r') as file:
-    query = file.read().replace('\n', ' ')
+#with open('src.dsl', 'r') as file:
+#    query = file.read().replace('\n', ' ')
 
 
-l = MyLexer(query)
-l.build()
-l.test()
+#l = MyLexer(query)
+#l.build()
+#l.test()
 
-p = MyParser(l, l.tokens)
+#p = MyParser(l, l.tokens)
 
-p.build()
+#p.build()
 
-p.parser.parse(query)
+#p.parser.parse(query)
 '''
 s = Sorter(l.t)
 s.sort()
