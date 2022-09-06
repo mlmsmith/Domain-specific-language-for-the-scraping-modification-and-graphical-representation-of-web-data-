@@ -65,6 +65,7 @@ class Reader:
         self.x_axis = sorter.x_axis
         self.y_axis = sorter.y_axis
 
+
 r = Reader()
 r.read()
 
@@ -86,7 +87,11 @@ print('group_by =', r.group_by)
 print('aggregate_function =', r.aggregate_function)
 print('aggregate_operators =', r.aggregate_operators)
 print('aggregate_value =', r.aggregate_value)
+print('x axis =', r.x_axis)
+print('y axis =', r.y_axis)
+
 '''
+
 
 
 

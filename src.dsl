@@ -6,4 +6,3 @@ RESPONSE = 'div.details-pricing'
 WHERE [price] > 1000
 BAR_PLOT X=(name),
 Y=(price)
-

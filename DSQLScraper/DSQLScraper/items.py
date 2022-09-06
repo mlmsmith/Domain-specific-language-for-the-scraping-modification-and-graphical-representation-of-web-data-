@@ -26,8 +26,48 @@ class DsqlscraperItem(scrapy.Item):
                                                         output_processor=TakeFirst())
 
 
-rules2 = []
-d = {'allow': 'collections'}
-x = 'collections/japanese-whisky'
+class CrawlspiderRuleMaker:
+
+    rules = []
+    allow_values = {}
+    deny_values = {}
+    callback_values = {}
+
+    if r.rules:
+        for i in range(len(r.rules)):
+            for j in r.rules[i].keys():
+                if j == 'allow':
+                    allow_values[i] = r.rules[i][j]
+                if j == 'deny':
+                    deny_values[i] = r.rules[i][j]
+                if j == 'callback':
+                    callback_values[i] = r.rules[i][j]
+
+        for i in range(len(r.rules)):
+            allows = None
+            denys = None
+            callbacks = None
+            if i in allow_values:
+                allows = allow_values[i]
+            if i in deny_values:
+                denys = deny_values[i]
+            if i in callback_values:
+                callbacks = callback_values[i]
+            rules.append(Rule(LinkExtractor(allow=allows, deny=denys), callback=callbacks))
+
+    rules = tuple(rules)
+
+
+#for i in range(len(r.rules)):
+#    for j in r.rules[i].keys():
+#        if j == 'allow':
+            #allow_values[i] = r.rules[i][j]
+#            print(r.rules[i][j])
+#print(CrawlspiderRuleMaker.allow_values)
+#print(CrawlspiderRuleMaker.deny_values)
+#print(CrawlspiderRuleMaker.callback_values)
+#rules2 = []
+#d = {'allow': 'collections'}
+#x = 'collections/japanese-whisky'
 
 # extractor = LinkExtractor.

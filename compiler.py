@@ -16,8 +16,9 @@ class MyLexer:
         'COLON',
         'MODIFIER',
         'URL',
-        'L_BRACKET',
-        'R_BRACKET',
+        'DOMAIN',
+        #'L_BRACKET',
+        #'R_BRACKET',
         'COMMA',
         'FROM',
         'WHERE',
@@ -35,7 +36,7 @@ class MyLexer:
         'FLOAT',
         # 'STRING',
         'RULES_LABEL',
-        'RULE',
+        'RULES',
         'GROUP_BY',
         'HAVING',
         'AVERAGE',
@@ -58,9 +59,10 @@ class MyLexer:
     t_SELECTOR = r'\'(.*?)\''
     t_MODIFIER = r'\((.*?)\)'
     t_URL = r'\'http(.+?)\''
+    t_DOMAIN = r'(?i)DOMAIN'
     t_COLON = r'\:'
-    t_L_BRACKET = r'\['
-    t_R_BRACKET = r'\]'
+    #t_L_BRACKET = r'\['
+    #t_R_BRACKET = r'\]'
     t_COMMA = r'\,'
     t_FROM = r'(?i)FROM'
     t_WHERE = r'(?i)WHERE'
@@ -78,7 +80,7 @@ class MyLexer:
     t_LESS_EQUAL = r'\<\='
     t_NOT_EQUAL = r'\!\='
     t_RULES_LABEL = f'(?i)RULES'
-    t_RULE = r'\{(.*?)\}'
+    t_RULES = r'\[{(.*?)\}]'
     t_GROUP_BY = r'(?i)GROUP_BY'
     t_HAVING = r'(?i)HAVING'
     t_AVERAGE = r'(?i)AVG'
@@ -133,21 +135,18 @@ class MyParser:
         statement      : scrape
                        | crawl
         scrape         : SCRAPE categories location response page manipulation sorting plot
-                       | location SCRAPE categories response page manipulation sorting plot
-        crawl          : CRAWL categories crawl_location response instructions manipulation sorting plot
-                       | crawl_location CRAWL categories response instructions manipulation sorting plot
+        crawl          : CRAWL categories location instructions manipulation sorting plot
         categories     : category
                        | category COMMA categories
         category       : FIELD COLON SELECTOR MODIFIER
                        | FIELD COLON SELECTOR
         location       : FROM URL
-        crawl_location : FROM URL COMMA SELECTOR
+                       | FROM URL domain
+        domain         : DOMAIN EQUALS SELECTOR
         response       : RESPONSE EQUALS SELECTOR
         page           : PAGE EQUALS SELECTOR
                        |
-        instructions   : RULES_LABEL EQUALS L_BRACKET rules R_BRACKET
-        rules          : RULE
-                       | RULE COMMA rules
+        instructions   : RULES_LABEL EQUALS RULES
         manipulation   : filtering aggregation
                        | filtering
                        |
@@ -182,8 +181,8 @@ class MyParser:
         '''
 
 
-
 class Sorter:
+
     urls = []
     domains = []
     categories = []
@@ -191,7 +190,7 @@ class Sorter:
     modifiers = []
     response = ''
     page = ''
-    rules = []
+    rules = None#[]
     conditions = {}
     where = []
     operators = []
@@ -206,7 +205,6 @@ class Sorter:
     plot_type = ''
     x_axis = []
     y_axis = []
-
 
     def __init__(self, tokens):
         self.tokens = tokens
@@ -226,14 +224,19 @@ class Sorter:
     #            new_lst.extend(i)
     #    return new_lst
 
-    def is_number(self, str):
+    def is_number(self, string):
         try:
-            float(str)
+            float(string)
             return True
         except ValueError:
             return False
 
     def sort(self):
+
+        allow = 'allow'
+        deny = 'deny'
+        callback = 'callback'
+
         for token in range(len(self.tokens)):
             # add URLs, fields and their selectors and modifiers
             if self.tokens[token].type == 'URL': self.urls.append(self.remove_quotes(self.tokens[token].value))
@@ -248,12 +251,11 @@ class Sorter:
                 self.response = self.remove_quotes(self.tokens[token].value)
             if self.tokens[token-2].type == 'PAGE':
                 self.page = self.remove_quotes(self.tokens[token].value)
-            if self.tokens[token].type == 'RULE':
-                self.rules.append(eval(self.tokens[token].value))
+            if self.tokens[token].type == 'RULES':
+                self.rules = eval(self.tokens[token].value)
             if self.tokens[token].type == 'FIELD' and \
                     (self.tokens[token-1].type == 'WHERE' or self.tokens[token-1].type == 'AND'):
                 self.conditions[self.tokens[token].value] = (self.tokens[token+2].value, self.tokens[token+3].value)
-            if self.tokens[token].type == 'RULE': self.rules.append(self.tokens[token].value)
             if self.tokens[token].type == 'COLUMN' and self.tokens[token - 1].type != 'GROUP_BY':
                 self.where.append(self.tokens[token].value.strip('[]'))
             if self.tokens[token].type in {'EQUALS', 'GREATER', 'LESS_EQUAL', 'GREATER_EQUAL', 'NOT_EQUAL'} and \
@@ -290,48 +292,48 @@ class Sorter:
             if self.tokens[token - 1].type == 'Y' and self.tokens[token].type == 'MODIFIER':
                 self.y_axis.append(self.tokens[token].value.strip('()'))
 
-'''
-with open('src.dsl', 'r') as file:
-    query = file.read().replace('\n', ' ')
+
+#with open('src.dsl', 'r') as file:
+#    query = file.read().replace('\n', ' ')
 
 
-l = MyLexer(query)
-l.build()
-l.test()
+#l = MyLexer(query)
+#l.build()
+#l.test()
 
-p = MyParser(l, l.tokens)
+#p = MyParser(l, l.tokens)
 
-p.build()
+#p.build()
 
-p.parser.parse(query)
+#p.parser.parse(query)
 
-s = Sorter(l.t)
-s.sort()
+#s = Sorter(l.t)
+#s.sort()
 
 
-print('s urls', s.urls)
-print('s domains', s.domains)
-print('s categories', s.categories)
-print('s selectors', s.selectors)
-print('s modifiers', s.modifiers)
-print('s response', s.response)
-print('s page', s.page)
-print('s rules', s.rules)
-print('s conditions', s.conditions)
-print('s where', s.where)
-print('s operators', s.operators)
-print('s values', s.values)
-print('s logical_operators', s.logical_operators)
-print('s group_by', s.group_by)
-print('s aggregate_function', s.aggregate_function)
-print('s aggregate_operators', s.aggregate_operators)
-print('s aggregate_value', s.aggregate_value)
-print('s order', s.order)
-print('s ascending', s.ascending)
-print('s plot type', s.plot_type)
-print('s x_axis', s.x_axis)
-print('s y_axis', s.y_axis)
-'''
+#print('s urls', s.urls)
+#print('s domains', s.domains)
+#print('s categories', s.categories)
+#print('s selectors', s.selectors)
+#print('s modifiers', s.modifiers)
+#print('s response', s.response)
+#print('s page', s.page)
+#print('s rules', s.rules)
+#print('s conditions', s.conditions)
+#print('s where', s.where)
+#print('s operators', s.operators)
+#print('s values', s.values)
+#print('s logical_operators', s.logical_operators)
+#print('s group_by', s.group_by)
+#print('s aggregate_function', s.aggregate_function)
+#print('s aggregate_operators', s.aggregate_operators)
+#print('s aggregate_value', s.aggregate_value)
+#print('s order', s.order)
+#print('s ascending', s.ascending)
+#print('s plot type', s.plot_type)
+#print('s x_axis', s.x_axis)
+#print('s y_axis', s.y_axis)
+
 
 
 
