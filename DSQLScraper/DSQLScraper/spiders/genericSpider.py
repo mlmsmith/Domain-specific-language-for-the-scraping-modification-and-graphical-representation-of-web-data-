@@ -4,6 +4,18 @@ from DSQLScraper.DSQLScraper.items import DsqlscraperItem
 #from dsqlspider.dsqlspider.items import sorter
 from scrapy.loader import ItemLoader
 from reader import r
+import requests
+import sys
+
+'''
+try:
+    req = requests.get(r.urls)
+    req.raise_for_status()
+except requests.exceptions.HTTPError as err:
+    print('Bad status code')
+    sys.exit(1)
+'''
+
 
 
 class GenericSpider(scrapy.Spider):

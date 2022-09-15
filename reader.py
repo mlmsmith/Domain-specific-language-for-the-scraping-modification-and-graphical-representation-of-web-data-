@@ -30,6 +30,7 @@ class Reader:
     def read(self):
         with open('src.dsl', 'r') as file:
             query = file.read().replace('\n', ' ')
+
         lexer = Lexer(query)
         lexer.build()
         lexer.test()
@@ -67,8 +68,10 @@ class Reader:
 
 
 r = Reader()
-r.read()
-
+#try:
+#    r.read()
+#except Exception:
+#    ('bad input')
 '''
 print('urls =', r.urls)
 print('domains =', r.domains)
@@ -89,7 +92,6 @@ print('aggregate_operators =', r.aggregate_operators)
 print('aggregate_value =', r.aggregate_value)
 print('x axis =', r.x_axis)
 print('y axis =', r.y_axis)
-
 '''
 
 

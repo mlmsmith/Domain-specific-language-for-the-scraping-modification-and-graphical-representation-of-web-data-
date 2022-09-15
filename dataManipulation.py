@@ -49,7 +49,7 @@ class Data_minipulator:
                         self.query += ' & '
                     elif logical_operator[int(i)] == 'OR':
                         self.query += ' | '
-        #print(self.query)
+        print(self.query)
         return data_frame.query(self.query)
 
     def group_by_having(self, data_frame, group, agg_function=None, agg_operator=None, agg_value=None):

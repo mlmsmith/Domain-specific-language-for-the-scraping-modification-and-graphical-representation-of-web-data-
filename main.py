@@ -4,13 +4,17 @@ from dataManipulation import dm
 from dataVisualisation import DataVisualisation
 import pandas as pd
 from reader import r
+import DSQLScraper.DSQLScraper.middlewares
 
+
+#class Main:
 
 def main():
     # clear previously scraped data from csv
     data = open('data.csv', 'w')
     data.truncate()
     data.close()
+
 
     process = CrawlerProcess(
         settings={
@@ -26,28 +30,42 @@ def main():
     else:
         process.crawl(GenericSpider)
         process.start()
+
+    df = pd.read_csv('data.csv')
+
     # check if data filtering is specified
-    if len(r.where) > 0:
-        df = pd.read_csv('data.csv')
-        # check if multiple filters are specified
-        if len(r.logical_operators) > 1:
+    '''
+     if len(r.where) > 1:
+        if len(r.logical_operators) > 0:
             df = dm.filter_data(df, r.where, r.operators, r.values, r.logical_operators)
         else:
             df = dm.filter_data(df, r.where, r.operators, r.values)
         df.to_csv('data.csv')
+    df = dm.group_by_having(df, r.group_by, r.aggregate_function)
+    df.to_csv('data.csv')
+    '''
 
-    # check if data visualisation is specified
-    #if r.plot_type != '':
-    #    if len(r.where) > 0:
-    #        date_frame = filtered_data
+    # check if data aggregation is specified
+    #if len(r.group_by) > 0:
+    #    if r.aggregate_function != '':
+    #        if r.aggregate_operators and len(r.aggregate_value) > 0:
+    #            df = dm.group_by_having(df, r.group_by, r.aggregate_function, r.aggregate_operators, r.aggregate_value)
+    #        else:
+    #            df = dm.group_by_having(df, r.group_by, r.aggregate_function)
     #    else:
-    #        data_frame = pd.read_csv('data.csv')
-    #    dv = DataVisualisation(data_frame, r.plot_type, r.x_axis, r.y_axis)
-    #    dv.construct_plot()
+    #        df = dm.group_by_having(df, r.group_by)
 
-    dv = DataVisualisation(df, r.plot_type, r.x_axis, r.y_axis)
-    dv.construct_plot()
+    #if r.order != '':
+    #    df = dm.order_by(df, r.order)
+    #df.to_csv('data.csv')
+
+    if r.plot_type != '':
+        dv = DataVisualisation(df, r.plot_type, r.x_axis, r.y_axis)
+        dv.construct_plot()
 
 
+#if __name__ == '__main__':
+#    main = Main()
+#    main.run()
 if __name__ == '__main__':
     main()

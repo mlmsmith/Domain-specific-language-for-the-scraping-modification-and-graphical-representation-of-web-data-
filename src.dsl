@@ -1,8 +1,7 @@
-SCRAPE
-name: 'a'(clean, text),
-price: 'p.price.larger'(clean, float)
-FROM 'http://jessops.com/drones/'
-RESPONSE = 'div.details-pricing'
-WHERE [price] > 1000
-BAR_PLOT X=(name),
-Y=(price)
+CRAWL
+brand: 'div.vendor a'(clean, text),
+name: 'h1.title'(clean, text),
+price: 'span.price'(clean, text)
+FROM 'http://sipwhiskey.com/'
+DOMAIN = 'sipwhiskey.com'
+RULES = [{allow: 'collections/japanese-whisky', deny: 'products'}, {allow: 'products', callback: 'parse_item'}]

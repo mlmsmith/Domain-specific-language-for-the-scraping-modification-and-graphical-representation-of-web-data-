@@ -180,6 +180,9 @@ class MyParser:
         y_axis         : Y MODIFIER
         '''
 
+    def p_error(self, p):
+        print('invalid syntax')
+
 
 class Sorter:
 
@@ -258,10 +261,10 @@ class Sorter:
                 self.conditions[self.tokens[token].value] = (self.tokens[token+2].value, self.tokens[token+3].value)
             if self.tokens[token].type == 'COLUMN' and self.tokens[token - 1].type != 'GROUP_BY':
                 self.where.append(self.tokens[token].value.strip('[]'))
-            if self.tokens[token].type in {'EQUALS', 'GREATER', 'LESS_EQUAL', 'GREATER_EQUAL', 'NOT_EQUAL'} and \
+            if self.tokens[token].type in {'EQUALS', 'GREATER', 'LESS', 'LESS_EQUAL', 'GREATER_EQUAL', 'NOT_EQUAL'} and \
                     self.tokens[token - 1].type == 'COLUMN': self.operators.append(self.tokens[token].type)
             if self.tokens[token].type in {'INTEGER', 'FLOAT', 'SELECTOR'} and \
-                    self.tokens[token - 1].type in {'EQUALS', 'GREATER', 'LESS_EQUAL', 'GREATER_EQUAL', 'NOT_EQUAL'} \
+                    self.tokens[token - 1].type in {'EQUALS', 'GREATER', 'LESS', 'LESS_EQUAL', 'GREATER_EQUAL', 'NOT_EQUAL'} \
                     and self.tokens[token - 2].type == 'COLUMN':
                 self.values.append(self.remove_quotes(self.tokens[token].value))
             if self.tokens[token].type == 'AND' or self.tokens[token].type == 'OR':
@@ -292,47 +295,52 @@ class Sorter:
             if self.tokens[token - 1].type == 'Y' and self.tokens[token].type == 'MODIFIER':
                 self.y_axis.append(self.tokens[token].value.strip('()'))
 
-
-#with open('src.dsl', 'r') as file:
-#    query = file.read().replace('\n', ' ')
-
-
-#l = MyLexer(query)
-#l.build()
-#l.test()
-
-#p = MyParser(l, l.tokens)
-
-#p.build()
-
-#p.parser.parse(query)
-
-#s = Sorter(l.t)
-#s.sort()
+'''
+with open('src.dsl', 'r') as file:
+    query = file.read().replace('\n', ' ')
 
 
-#print('s urls', s.urls)
-#print('s domains', s.domains)
-#print('s categories', s.categories)
-#print('s selectors', s.selectors)
-#print('s modifiers', s.modifiers)
-#print('s response', s.response)
-#print('s page', s.page)
-#print('s rules', s.rules)
-#print('s conditions', s.conditions)
-#print('s where', s.where)
-#print('s operators', s.operators)
-#print('s values', s.values)
-#print('s logical_operators', s.logical_operators)
-#print('s group_by', s.group_by)
-#print('s aggregate_function', s.aggregate_function)
-#print('s aggregate_operators', s.aggregate_operators)
-#print('s aggregate_value', s.aggregate_value)
-#print('s order', s.order)
-#print('s ascending', s.ascending)
-#print('s plot type', s.plot_type)
-#print('s x_axis', s.x_axis)
-#print('s y_axis', s.y_axis)
+l = MyLexer(query)
+l.build()
+l.test()
+
+p = MyParser(l, l.tokens)
+
+p.build()
+
+p.parser.parse(query)
+
+s = Sorter(l.t)
+s.sort()
+
+
+print('s urls', s.urls)
+print('s domains', s.domains)
+print('s categories', s.categories)
+print('s selectors', s.selectors)
+print('s modifiers', s.modifiers)
+print('s response', s.response)
+print('s page', s.page)
+print('s rules', s.rules)
+print('s conditions', s.conditions)
+print('s where', s.where)
+print('s operators', s.operators)
+print('s values', s.values)
+print('s logical_operators', s.logical_operators)
+print('s group_by', s.group_by)
+print('s aggregate_function', s.aggregate_function)
+print('s aggregate_operators', s.aggregate_operators)
+print('s aggregate_value', s.aggregate_value)
+print('s order', s.order)
+print('s ascending', s.ascending)
+print('s plot type', s.plot_type)
+print('s x_axis', s.x_axis)
+print('s y_axis', s.y_axis)
+
+
+'''
+
+
 
 
 
