@@ -1,3 +1,5 @@
+import sys
+
 import ply.lex as lex
 import ply.yacc as yacc
 import re
@@ -46,10 +48,9 @@ class MyLexer:
         'COLUMN',
         'ORDER_BY',
         'DESCENDING',
-        'BAR_PLOT',
-        'LINE_PLOT',
-        'X',
-        'Y'
+        'PLOT',
+        'CATS',
+        'VARS'
     ]
 
     t_SCRAPE = r'(?i)SCRAPE'
@@ -90,10 +91,11 @@ class MyLexer:
     t_COLUMN = r'\[(.*?)\]'
     t_ORDER_BY = r'(?i)ORDER_BY'
     t_DESCENDING = r'(?i)DESCENDING'
-    t_BAR_PLOT = r'(?i)BAR_PLOT'
-    t_LINE_PLOT = r'(?i)LINE_PLOT'
-    t_X = r'(?i)X( )*=( )*'
-    t_Y = r'(?i)Y( )*=( )*'
+    #t_BAR_PLOT = r'(?i)BAR_PLOT'
+    #t_LINE_PLOT = r'(?i)LINE_PLOT'
+    t_PLOT = r'(?i)PLOT'
+    t_CATS = r'(?i)CATS'
+    t_VARS = r'(?i)VARS'
     t_ignore = r' '
 
 
@@ -131,7 +133,7 @@ class MyParser:
         self.parser = yacc.yacc(module=self)
 
     def p_statement(self, p):
-        '''
+        """
         statement      : scrape
                        | crawl
         scrape         : SCRAPE categories location response page manipulation sorting plot
@@ -173,15 +175,15 @@ class MyParser:
         sorting        : ORDER_BY COLUMN
                        | ORDER_BY COLUMN DESCENDING
                        |
-        plot           : BAR_PLOT x_axis COMMA y_axis
-                       | LINE_PLOT x_axis COMMA y_axis
+        plot           : PLOT cats COMMA vars
                        |
-        x_axis         : X MODIFIER
-        y_axis         : Y MODIFIER
-        '''
+        cats           : CATS EQUALS MODIFIER
+        vars           : VARS EQUALS MODIFIER
+        """
 
     def p_error(self, p):
         print('invalid syntax')
+        #sys.exit(1)
 
 
 class Sorter:
@@ -193,7 +195,7 @@ class Sorter:
     modifiers = []
     response = ''
     page = ''
-    rules = None#[]
+    rules = None
     conditions = {}
     where = []
     operators = []
@@ -205,9 +207,9 @@ class Sorter:
     aggregate_value = []
     order = ''
     ascending = True
-    plot_type = ''
-    x_axis = []
-    y_axis = []
+    #plot_type = ''
+    cats = []
+    vars = []
 
     def __init__(self, tokens):
         self.tokens = tokens
@@ -215,17 +217,17 @@ class Sorter:
     def remove_quotes(self, str):
         return re.sub('[\'\"]', '', str)
 
-    def flatten(self, l):
-        return [item for sublist in l for item in sublist]
+    #def flatten(self, l):
+    #    return [item for sublist in l for item in sublist]
 
-    #def flatten(self, lst):
-    #    new_lst = []
-    #    for i in lst:
-    #        if type(i) != list:
-    #            new_lst.append(i)
-    #        else:
-    #            new_lst.extend(i)
-    #    return new_lst
+    def flatten(self, lst):
+        new_lst = []
+        for i in lst:
+            if type(i) != list:
+                new_lst.append(i)
+            else:
+                new_lst.extend(i)
+        return new_lst
 
     def is_number(self, string):
         try:
@@ -259,7 +261,8 @@ class Sorter:
             if self.tokens[token].type == 'FIELD' and \
                     (self.tokens[token-1].type == 'WHERE' or self.tokens[token-1].type == 'AND'):
                 self.conditions[self.tokens[token].value] = (self.tokens[token+2].value, self.tokens[token+3].value)
-            if self.tokens[token].type == 'COLUMN' and self.tokens[token - 1].type != 'GROUP_BY':
+            if self.tokens[token].type == 'COLUMN' and self.tokens[token - 1].type != 'GROUP_BY' and \
+                    self.tokens[token - 1].type != 'ORDER_BY':
                 self.where.append(self.tokens[token].value.strip('[]'))
             if self.tokens[token].type in {'EQUALS', 'GREATER', 'LESS', 'LESS_EQUAL', 'GREATER_EQUAL', 'NOT_EQUAL'} and \
                     self.tokens[token - 1].type == 'COLUMN': self.operators.append(self.tokens[token].type)
@@ -271,7 +274,7 @@ class Sorter:
                 self.logical_operators.append(self.tokens[token].value)
             if self.tokens[token - 1].type == 'GROUP_BY':
                 self.group_by.append(self.tokens[token].value.strip('[]').split(','))
-                self.group_by = self.flatten(self.group_by)
+                self.group_by = self.flatten(self.group_by)#
                 for j in range(len(self.group_by)):
                     self.group_by[j] = self.group_by[j].strip()
             if self.tokens[token - 1].type == 'HAVING': self.aggregate_function = self.tokens[token].value
@@ -288,12 +291,14 @@ class Sorter:
                 self.order = self.tokens[token].value.strip('[]')
             if self.tokens[token].type == 'DESCENDING':
                 self.ascending = False
-            if self.tokens[token].type == 'BAR_PLOT':
-                self.plot_type = self.tokens[token].type
-            if self.tokens[token - 1].type == 'X' and self.tokens[token].type == 'MODIFIER':
-                self.x_axis.append(self.tokens[token].value.strip('()'))
-            if self.tokens[token - 1].type == 'Y' and self.tokens[token].type == 'MODIFIER':
-                self.y_axis.append(self.tokens[token].value.strip('()'))
+            #if self.tokens[token].type == 'BAR_PLOT':
+            #    self.plot_type = self.tokens[token].type
+            if self.tokens[token - 2].type == 'CATS' and self.tokens[token].type == 'MODIFIER':
+                self.cats.append(re.sub('[\(\) ]', '', str(self.tokens[token].value)).split(','))
+                self.cats = self.flatten(self.cats)
+            if self.tokens[token - 2].type == 'VARS' and self.tokens[token].type == 'MODIFIER':
+                self.vars.append(re.sub('[\(\) ]', '', str(self.tokens[token].value)).split(','))
+                self.vars = self.flatten(self.vars)
 
 '''
 with open('src.dsl', 'r') as file:
@@ -333,12 +338,16 @@ print('s aggregate_operators', s.aggregate_operators)
 print('s aggregate_value', s.aggregate_value)
 print('s order', s.order)
 print('s ascending', s.ascending)
-print('s plot type', s.plot_type)
-print('s x_axis', s.x_axis)
-print('s y_axis', s.y_axis)
-
+#print('s plot type', s.plot_type)
+print('s cats', s.cats)
+print('s vars', s.vars)
 
 '''
+
+
+
+
+
 
 
 

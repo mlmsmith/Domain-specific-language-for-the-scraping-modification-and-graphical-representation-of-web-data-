@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AND AVERAGE BAR_PLOT COLON COLUMN COMMA COUNT CRAWL DESCENDING DOMAIN EQUALS FIELD FLOAT FROM GREATER GREATER_EQUAL GROUP_BY HAVING INTEGER LESS LESS_EQUAL LINE_PLOT MODIFIER NOT_EQUAL OR ORDER_BY PAGE RESPONSE RULES RULES_LABEL SCRAPE SELECTOR SUM URL WHERE X Y\n        statement      : scrape\n                       | crawl\n        scrape         : SCRAPE categories location response page manipulation sorting plot\n        crawl          : CRAWL categories location instructions manipulation sorting plot\n        categories     : category\n                       | category COMMA categories\n        category       : FIELD COLON SELECTOR MODIFIER\n                       | FIELD COLON SELECTOR\n        location       : FROM URL\n                       | FROM URL domain\n        domain         : DOMAIN EQUALS SELECTOR\n        response       : RESPONSE EQUALS SELECTOR\n        page           : PAGE EQUALS SELECTOR\n                       |\n        instructions   : RULES_LABEL EQUALS RULES\n        manipulation   : filtering aggregation\n                       | filtering\n                       |\n        filtering      : WHERE conditions\n        conditions     : condition\n                       | condition AND conditions\n                       | condition OR conditions\n        condition      : COLUMN operator INTEGER\n                       | COLUMN operator FLOAT\n                       | COLUMN EQUALS SELECTOR\n        operator       : EQUALS\n                       | GREATER\n                       | LESS\n                       | GREATER_EQUAL\n                       | LESS_EQUAL\n                       | NOT_EQUAL\n        aggregation    : GROUP_BY COLUMN\n                       | GROUP_BY COLUMN HAVING aggregate\n                       | GROUP_BY COLUMN HAVING aggregate operator INTEGER\n                       | GROUP_BY COLUMN HAVING aggregate operator FLOAT\n        aggregate      : AVERAGE\n                       | SUM\n                       | COUNT\n        sorting        : ORDER_BY COLUMN\n                       | ORDER_BY COLUMN DESCENDING\n                       |\n        plot           : BAR_PLOT x_axis COMMA y_axis\n                       | LINE_PLOT x_axis COMMA y_axis\n                       |\n        x_axis         : X MODIFIER\n        y_axis         : Y MODIFIER\n        '
+_lr_signature = 'AND AVERAGE CATS COLON COLUMN COMMA COUNT CRAWL DESCENDING DOMAIN EQUALS FIELD FLOAT FROM GREATER GREATER_EQUAL GROUP_BY HAVING INTEGER LESS LESS_EQUAL MODIFIER NOT_EQUAL OR ORDER_BY PAGE PLOT RESPONSE RULES RULES_LABEL SCRAPE SELECTOR SUM URL VARS WHERE\n        statement      : scrape\n                       | crawl\n        scrape         : SCRAPE categories location response page manipulation sorting plot\n        crawl          : CRAWL categories location instructions manipulation sorting plot\n        categories     : category\n                       | category COMMA categories\n        category       : FIELD COLON SELECTOR MODIFIER\n                       | FIELD COLON SELECTOR\n        location       : FROM URL\n                       | FROM URL domain\n        domain         : DOMAIN EQUALS SELECTOR\n        response       : RESPONSE EQUALS SELECTOR\n        page           : PAGE EQUALS SELECTOR\n                       |\n        instructions   : RULES_LABEL EQUALS RULES\n        manipulation   : filtering aggregation\n                       | filtering\n                       |\n        filtering      : WHERE conditions\n        conditions     : condition\n                       | condition AND conditions\n                       | condition OR conditions\n        condition      : COLUMN operator INTEGER\n                       | COLUMN operator FLOAT\n                       | COLUMN EQUALS SELECTOR\n        operator       : EQUALS\n                       | GREATER\n                       | LESS\n                       | GREATER_EQUAL\n                       | LESS_EQUAL\n                       | NOT_EQUAL\n        aggregation    : GROUP_BY COLUMN\n                       | GROUP_BY COLUMN HAVING aggregate\n                       | GROUP_BY COLUMN HAVING aggregate operator INTEGER\n                       | GROUP_BY COLUMN HAVING aggregate operator FLOAT\n        aggregate      : AVERAGE\n                       | SUM\n                       | COUNT\n        sorting        : ORDER_BY COLUMN\n                       | ORDER_BY COLUMN DESCENDING\n                       |\n        plot           : PLOT cats COMMA vars\n                       |\n        cats           : CATS EQUALS MODIFIER\n        vars           : VARS EQUALS MODIFIER\n        '
     
-_lr_action_items = {'SCRAPE':([0,],[4,]),'CRAWL':([0,],[5,]),'$end':([1,2,3,15,20,22,28,29,32,34,36,38,40,41,43,44,45,47,50,51,61,65,67,68,69,70,71,75,76,77,78,79,81,84,85,86,],[0,-1,-2,-14,-18,-18,-41,-17,-41,-12,-44,-16,-19,-20,-15,-44,-13,-4,-39,-32,-3,-40,-21,-22,-23,-24,-25,-33,-36,-37,-38,-42,-43,-46,-34,-35,]),'FIELD':([4,5,12,],[8,8,8,]),'FROM':([6,7,9,18,19,27,],[11,-5,11,-6,-8,-7,]),'COMMA':([7,19,27,62,64,73,],[12,-8,-7,72,74,-45,]),'COLON':([8,],[13,]),'RESPONSE':([10,17,25,46,],[16,-9,-10,-11,]),'URL':([11,],[17,]),'SELECTOR':([13,24,33,35,55,],[19,34,45,46,71,]),'RULES_LABEL':([14,17,25,46,],[21,-9,-10,-11,]),'PAGE':([15,34,],[23,-12,]),'WHERE':([15,20,22,34,43,45,],[-14,30,30,-12,-15,-13,]),'ORDER_BY':([15,20,22,28,29,32,34,38,40,41,43,45,51,67,68,69,70,71,75,76,77,78,85,86,],[-14,-18,-18,37,-17,37,-12,-16,-19,-20,-15,-13,-32,-21,-22,-23,-24,-25,-33,-36,-37,-38,-34,-35,]),'BAR_PLOT':([15,20,22,28,29,32,34,36,38,40,41,43,44,45,50,51,65,67,68,69,70,71,75,76,77,78,85,86,],[-14,-18,-18,-41,-17,-41,-12,48,-16,-19,-20,-15,48,-13,-39,-32,-40,-21,-22,-23,-24,-25,-33,-36,-37,-38,-34,-35,]),'LINE_PLOT':([15,20,22,28,29,32,34,36,38,40,41,43,44,45,50,51,65,67,68,69,70,71,75,76,77,78,85,86,],[-14,-18,-18,-41,-17,-41,-12,49,-16,-19,-20,-15,49,-13,-39,-32,-40,-21,-22,-23,-24,-25,-33,-36,-37,-38,-34,-35,]),'EQUALS':([16,21,23,26,42,75,76,77,78,],[24,31,33,35,55,83,-36,-37,-38,]),'DOMAIN':([17,],[26,]),'MODIFIER':([19,63,80,],[27,73,84,]),'GROUP_BY':([29,40,41,67,68,69,70,71,],[39,-19,-20,-21,-22,-23,-24,-25,]),'COLUMN':([30,37,39,52,53,],[42,50,51,42,42,]),'RULES':([31,],[43,]),'AND':([41,69,70,71,],[52,-23,-24,-25,]),'OR':([41,69,70,71,],[53,-23,-24,-25,]),'GREATER':([42,75,76,77,78,],[56,56,-36,-37,-38,]),'LESS':([42,75,76,77,78,],[57,57,-36,-37,-38,]),'GREATER_EQUAL':([42,75,76,77,78,],[58,58,-36,-37,-38,]),'LESS_EQUAL':([42,75,76,77,78,],[59,59,-36,-37,-38,]),'NOT_EQUAL':([42,75,76,77,78,],[60,60,-36,-37,-38,]),'X':([48,49,],[63,63,]),'DESCENDING':([50,],[65,]),'HAVING':([51,],[66,]),'INTEGER':([54,55,56,57,58,59,60,82,83,],[69,-26,-27,-28,-29,-30,-31,85,-26,]),'FLOAT':([54,55,56,57,58,59,60,82,83,],[70,-26,-27,-28,-29,-30,-31,86,-26,]),'AVERAGE':([66,],[76,]),'SUM':([66,],[77,]),'COUNT':([66,],[78,]),'Y':([72,74,],[80,80,]),}
+_lr_action_items = {'SCRAPE':([0,],[4,]),'CRAWL':([0,],[5,]),'$end':([1,2,3,15,20,22,28,29,32,34,36,38,40,41,43,44,45,47,49,50,60,63,65,66,67,68,69,72,73,74,75,76,82,83,84,],[0,-1,-2,-14,-18,-18,-41,-17,-41,-12,-43,-16,-19,-20,-15,-43,-13,-4,-39,-32,-3,-40,-21,-22,-23,-24,-25,-33,-36,-37,-38,-42,-34,-35,-45,]),'FIELD':([4,5,12,],[8,8,8,]),'FROM':([6,7,9,18,19,27,],[11,-5,11,-6,-8,-7,]),'COMMA':([7,19,27,61,78,],[12,-8,-7,70,-44,]),'COLON':([8,],[13,]),'RESPONSE':([10,17,25,46,],[16,-9,-10,-11,]),'URL':([11,],[17,]),'SELECTOR':([13,24,33,35,54,],[19,34,45,46,69,]),'RULES_LABEL':([14,17,25,46,],[21,-9,-10,-11,]),'PAGE':([15,34,],[23,-12,]),'WHERE':([15,20,22,34,43,45,],[-14,30,30,-12,-15,-13,]),'ORDER_BY':([15,20,22,28,29,32,34,38,40,41,43,45,50,65,66,67,68,69,72,73,74,75,82,83,],[-14,-18,-18,37,-17,37,-12,-16,-19,-20,-15,-13,-32,-21,-22,-23,-24,-25,-33,-36,-37,-38,-34,-35,]),'PLOT':([15,20,22,28,29,32,34,36,38,40,41,43,44,45,49,50,63,65,66,67,68,69,72,73,74,75,82,83,],[-14,-18,-18,-41,-17,-41,-12,48,-16,-19,-20,-15,48,-13,-39,-32,-40,-21,-22,-23,-24,-25,-33,-36,-37,-38,-34,-35,]),'EQUALS':([16,21,23,26,42,62,72,73,74,75,77,],[24,31,33,35,54,71,80,-36,-37,-38,81,]),'DOMAIN':([17,],[26,]),'MODIFIER':([19,71,81,],[27,78,84,]),'GROUP_BY':([29,40,41,65,66,67,68,69,],[39,-19,-20,-21,-22,-23,-24,-25,]),'COLUMN':([30,37,39,51,52,],[42,49,50,42,42,]),'RULES':([31,],[43,]),'AND':([41,67,68,69,],[51,-23,-24,-25,]),'OR':([41,67,68,69,],[52,-23,-24,-25,]),'GREATER':([42,72,73,74,75,],[55,55,-36,-37,-38,]),'LESS':([42,72,73,74,75,],[56,56,-36,-37,-38,]),'GREATER_EQUAL':([42,72,73,74,75,],[57,57,-36,-37,-38,]),'LESS_EQUAL':([42,72,73,74,75,],[58,58,-36,-37,-38,]),'NOT_EQUAL':([42,72,73,74,75,],[59,59,-36,-37,-38,]),'CATS':([48,],[62,]),'DESCENDING':([49,],[63,]),'HAVING':([50,],[64,]),'INTEGER':([53,54,55,56,57,58,59,79,80,],[67,-26,-27,-28,-29,-30,-31,82,-26,]),'FLOAT':([53,54,55,56,57,58,59,79,80,],[68,-26,-27,-28,-29,-30,-31,83,-26,]),'AVERAGE':([64,],[73,]),'SUM':([64,],[74,]),'COUNT':([64,],[75,]),'VARS':([70,],[77,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statement':([0,],[1,]),'scrape':([0,],[2,]),'crawl':([0,],[3,]),'categories':([4,5,12,],[6,9,18,]),'category':([4,5,12,],[7,7,7,]),'location':([6,9,],[10,14,]),'response':([10,],[15,]),'instructions':([14,],[20,]),'page':([15,],[22,]),'domain':([17,],[25,]),'manipulation':([20,22,],[28,32,]),'filtering':([20,22,],[29,29,]),'sorting':([28,32,],[36,44,]),'aggregation':([29,],[38,]),'conditions':([30,52,53,],[40,67,68,]),'condition':([30,52,53,],[41,41,41,]),'plot':([36,44,],[47,61,]),'operator':([42,75,],[54,82,]),'x_axis':([48,49,],[62,64,]),'aggregate':([66,],[75,]),'y_axis':([72,74,],[79,81,]),}
+_lr_goto_items = {'statement':([0,],[1,]),'scrape':([0,],[2,]),'crawl':([0,],[3,]),'categories':([4,5,12,],[6,9,18,]),'category':([4,5,12,],[7,7,7,]),'location':([6,9,],[10,14,]),'response':([10,],[15,]),'instructions':([14,],[20,]),'page':([15,],[22,]),'domain':([17,],[25,]),'manipulation':([20,22,],[28,32,]),'filtering':([20,22,],[29,29,]),'sorting':([28,32,],[36,44,]),'aggregation':([29,],[38,]),'conditions':([30,51,52,],[40,65,66,]),'condition':([30,51,52,],[41,41,41,]),'plot':([36,44,],[47,60,]),'operator':([42,72,],[53,79,]),'cats':([48,],[61,]),'aggregate':([64,],[72,]),'vars':([70,],[76,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,50 +27,49 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> statement","S'",1,None,None,None),
-  ('statement -> scrape','statement',1,'p_statement','compiler.py',135),
-  ('statement -> crawl','statement',1,'p_statement','compiler.py',136),
-  ('scrape -> SCRAPE categories location response page manipulation sorting plot','scrape',8,'p_statement','compiler.py',137),
-  ('crawl -> CRAWL categories location instructions manipulation sorting plot','crawl',7,'p_statement','compiler.py',138),
-  ('categories -> category','categories',1,'p_statement','compiler.py',139),
-  ('categories -> category COMMA categories','categories',3,'p_statement','compiler.py',140),
-  ('category -> FIELD COLON SELECTOR MODIFIER','category',4,'p_statement','compiler.py',141),
-  ('category -> FIELD COLON SELECTOR','category',3,'p_statement','compiler.py',142),
-  ('location -> FROM URL','location',2,'p_statement','compiler.py',143),
-  ('location -> FROM URL domain','location',3,'p_statement','compiler.py',144),
-  ('domain -> DOMAIN EQUALS SELECTOR','domain',3,'p_statement','compiler.py',145),
-  ('response -> RESPONSE EQUALS SELECTOR','response',3,'p_statement','compiler.py',146),
-  ('page -> PAGE EQUALS SELECTOR','page',3,'p_statement','compiler.py',147),
-  ('page -> <empty>','page',0,'p_statement','compiler.py',148),
-  ('instructions -> RULES_LABEL EQUALS RULES','instructions',3,'p_statement','compiler.py',149),
-  ('manipulation -> filtering aggregation','manipulation',2,'p_statement','compiler.py',150),
-  ('manipulation -> filtering','manipulation',1,'p_statement','compiler.py',151),
-  ('manipulation -> <empty>','manipulation',0,'p_statement','compiler.py',152),
-  ('filtering -> WHERE conditions','filtering',2,'p_statement','compiler.py',153),
-  ('conditions -> condition','conditions',1,'p_statement','compiler.py',154),
-  ('conditions -> condition AND conditions','conditions',3,'p_statement','compiler.py',155),
-  ('conditions -> condition OR conditions','conditions',3,'p_statement','compiler.py',156),
-  ('condition -> COLUMN operator INTEGER','condition',3,'p_statement','compiler.py',157),
-  ('condition -> COLUMN operator FLOAT','condition',3,'p_statement','compiler.py',158),
-  ('condition -> COLUMN EQUALS SELECTOR','condition',3,'p_statement','compiler.py',159),
-  ('operator -> EQUALS','operator',1,'p_statement','compiler.py',160),
-  ('operator -> GREATER','operator',1,'p_statement','compiler.py',161),
-  ('operator -> LESS','operator',1,'p_statement','compiler.py',162),
-  ('operator -> GREATER_EQUAL','operator',1,'p_statement','compiler.py',163),
-  ('operator -> LESS_EQUAL','operator',1,'p_statement','compiler.py',164),
-  ('operator -> NOT_EQUAL','operator',1,'p_statement','compiler.py',165),
-  ('aggregation -> GROUP_BY COLUMN','aggregation',2,'p_statement','compiler.py',166),
-  ('aggregation -> GROUP_BY COLUMN HAVING aggregate','aggregation',4,'p_statement','compiler.py',167),
-  ('aggregation -> GROUP_BY COLUMN HAVING aggregate operator INTEGER','aggregation',6,'p_statement','compiler.py',168),
-  ('aggregation -> GROUP_BY COLUMN HAVING aggregate operator FLOAT','aggregation',6,'p_statement','compiler.py',169),
-  ('aggregate -> AVERAGE','aggregate',1,'p_statement','compiler.py',170),
-  ('aggregate -> SUM','aggregate',1,'p_statement','compiler.py',171),
-  ('aggregate -> COUNT','aggregate',1,'p_statement','compiler.py',172),
-  ('sorting -> ORDER_BY COLUMN','sorting',2,'p_statement','compiler.py',173),
-  ('sorting -> ORDER_BY COLUMN DESCENDING','sorting',3,'p_statement','compiler.py',174),
-  ('sorting -> <empty>','sorting',0,'p_statement','compiler.py',175),
-  ('plot -> BAR_PLOT x_axis COMMA y_axis','plot',4,'p_statement','compiler.py',176),
-  ('plot -> LINE_PLOT x_axis COMMA y_axis','plot',4,'p_statement','compiler.py',177),
-  ('plot -> <empty>','plot',0,'p_statement','compiler.py',178),
-  ('x_axis -> X MODIFIER','x_axis',2,'p_statement','compiler.py',179),
-  ('y_axis -> Y MODIFIER','y_axis',2,'p_statement','compiler.py',180),
+  ('statement -> scrape','statement',1,'p_statement','compiler.py',137),
+  ('statement -> crawl','statement',1,'p_statement','compiler.py',138),
+  ('scrape -> SCRAPE categories location response page manipulation sorting plot','scrape',8,'p_statement','compiler.py',139),
+  ('crawl -> CRAWL categories location instructions manipulation sorting plot','crawl',7,'p_statement','compiler.py',140),
+  ('categories -> category','categories',1,'p_statement','compiler.py',141),
+  ('categories -> category COMMA categories','categories',3,'p_statement','compiler.py',142),
+  ('category -> FIELD COLON SELECTOR MODIFIER','category',4,'p_statement','compiler.py',143),
+  ('category -> FIELD COLON SELECTOR','category',3,'p_statement','compiler.py',144),
+  ('location -> FROM URL','location',2,'p_statement','compiler.py',145),
+  ('location -> FROM URL domain','location',3,'p_statement','compiler.py',146),
+  ('domain -> DOMAIN EQUALS SELECTOR','domain',3,'p_statement','compiler.py',147),
+  ('response -> RESPONSE EQUALS SELECTOR','response',3,'p_statement','compiler.py',148),
+  ('page -> PAGE EQUALS SELECTOR','page',3,'p_statement','compiler.py',149),
+  ('page -> <empty>','page',0,'p_statement','compiler.py',150),
+  ('instructions -> RULES_LABEL EQUALS RULES','instructions',3,'p_statement','compiler.py',151),
+  ('manipulation -> filtering aggregation','manipulation',2,'p_statement','compiler.py',152),
+  ('manipulation -> filtering','manipulation',1,'p_statement','compiler.py',153),
+  ('manipulation -> <empty>','manipulation',0,'p_statement','compiler.py',154),
+  ('filtering -> WHERE conditions','filtering',2,'p_statement','compiler.py',155),
+  ('conditions -> condition','conditions',1,'p_statement','compiler.py',156),
+  ('conditions -> condition AND conditions','conditions',3,'p_statement','compiler.py',157),
+  ('conditions -> condition OR conditions','conditions',3,'p_statement','compiler.py',158),
+  ('condition -> COLUMN operator INTEGER','condition',3,'p_statement','compiler.py',159),
+  ('condition -> COLUMN operator FLOAT','condition',3,'p_statement','compiler.py',160),
+  ('condition -> COLUMN EQUALS SELECTOR','condition',3,'p_statement','compiler.py',161),
+  ('operator -> EQUALS','operator',1,'p_statement','compiler.py',162),
+  ('operator -> GREATER','operator',1,'p_statement','compiler.py',163),
+  ('operator -> LESS','operator',1,'p_statement','compiler.py',164),
+  ('operator -> GREATER_EQUAL','operator',1,'p_statement','compiler.py',165),
+  ('operator -> LESS_EQUAL','operator',1,'p_statement','compiler.py',166),
+  ('operator -> NOT_EQUAL','operator',1,'p_statement','compiler.py',167),
+  ('aggregation -> GROUP_BY COLUMN','aggregation',2,'p_statement','compiler.py',168),
+  ('aggregation -> GROUP_BY COLUMN HAVING aggregate','aggregation',4,'p_statement','compiler.py',169),
+  ('aggregation -> GROUP_BY COLUMN HAVING aggregate operator INTEGER','aggregation',6,'p_statement','compiler.py',170),
+  ('aggregation -> GROUP_BY COLUMN HAVING aggregate operator FLOAT','aggregation',6,'p_statement','compiler.py',171),
+  ('aggregate -> AVERAGE','aggregate',1,'p_statement','compiler.py',172),
+  ('aggregate -> SUM','aggregate',1,'p_statement','compiler.py',173),
+  ('aggregate -> COUNT','aggregate',1,'p_statement','compiler.py',174),
+  ('sorting -> ORDER_BY COLUMN','sorting',2,'p_statement','compiler.py',175),
+  ('sorting -> ORDER_BY COLUMN DESCENDING','sorting',3,'p_statement','compiler.py',176),
+  ('sorting -> <empty>','sorting',0,'p_statement','compiler.py',177),
+  ('plot -> PLOT cats COMMA vars','plot',4,'p_statement','compiler.py',178),
+  ('plot -> <empty>','plot',0,'p_statement','compiler.py',179),
+  ('cats -> CATS EQUALS MODIFIER','cats',3,'p_statement','compiler.py',180),
+  ('vars -> VARS EQUALS MODIFIER','vars',3,'p_statement','compiler.py',181),
 ]

@@ -13,6 +13,14 @@ def to_float(value):
     return float(re.sub('[^\d\.]', '', value))
 
 
+def to_int(value):
+    return int(re.sub('[^0-9]', '', value))
+
+
+def strip_value(value):
+    return value.strip()
+
+
 class DsqlscraperItem(scrapy.Item):
 
     def __init__(self):
@@ -22,6 +30,8 @@ class DsqlscraperItem(scrapy.Item):
             stipulations = []
             if 'clean' in r.modifiers[i]: stipulations.append(remove_tags)
             if 'float' in r.modifiers[i]: stipulations.append(to_float)
+            elif 'int' in r.modifiers[i]: stipulations.append(to_int)
+            else: stipulations.append(strip_value)
             self.fields[r.categories[i]] = scrapy.Field(input_processor=MapCompose(*stipulations),
                                                         output_processor=TakeFirst())
 

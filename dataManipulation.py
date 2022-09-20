@@ -23,7 +23,35 @@ class Data_minipulator:
             return True
         except ValueError:
             return False
-
+    '''
+      def filter_data(self, data_frame, wheres, operator, value, logical_operator=None):
+        for i in range(len(wheres)):
+            self.query += '(' + wheres[i]
+            if operator[i] == 'EQUALS':
+                self.query += ' == '
+            elif operator[i] == 'GREATER':
+                self.query += ' > '
+            elif operator[i] == 'LESS':
+                self.query += ' < '
+            elif operator[i] == 'GREATER_EQUAL':
+                self.query += ' >= '
+            elif operator[i] == 'LESS_EQUAL':
+                self.query += ' <= '
+            elif operator[i] == 'NOT_EQUAL':
+                self.query += ' != '
+            if not self.is_number(value[i]):
+                self.query += '\'' + str(value[i]) + '\')'
+            else:
+                self.query += str(value[i]) + ')'
+            if logical_operator:
+                if i < len(logical_operator):
+                    if logical_operator[int(i)] == 'AND':
+                        self.query += ' & '
+                    elif logical_operator[int(i)] == 'OR':
+                        self.query += ' | '
+        print(self.query)
+        return data_frame.query(self.query)
+    '''
     def filter_data(self, data_frame, wheres, operator, value, logical_operator=None):
         for i in range(len(wheres)):
             self.query += '(' + wheres[i]

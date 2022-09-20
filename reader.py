@@ -23,9 +23,9 @@ class Reader:
     aggregate_value = []
     order = ''
     ascending = bool
-    plot_type = ''
-    x_axis = []
-    y_axis = []
+    #plot_type = ''
+    cats = []
+    vars = []
 
     def read(self):
         with open('src.dsl', 'r') as file:
@@ -62,37 +62,43 @@ class Reader:
         self.aggregate_value = sorter.aggregate_value
         self.order = sorter.order
         self.ascending = sorter.ascending
-        self.plot_type = sorter.plot_type
-        self.x_axis = sorter.x_axis
-        self.y_axis = sorter.y_axis
+        #self.plot_type = sorter.plot_type
+        self.cats = sorter.cats
+        self.vars = sorter.vars
 
 
 r = Reader()
-#try:
-#    r.read()
-#except Exception:
-#    ('bad input')
-'''
-print('urls =', r.urls)
-print('domains =', r.domains)
-print('categories =', r.categories)
-print('selectors =', r.selectors)
-print('modifiers =', r.modifiers)
-print('response =', r.response)
-print('page =', r.page)
-print('rules =', r.rules)
-print('conditions =', r.conditions)
-print('where =', r.where)
-print('operators =', r.operators)
-print('values =', r.values)
-print('logical_operators =', r.logical_operators)
-print('group_by =', r.group_by)
-print('aggregate_function =', r.aggregate_function)
-print('aggregate_operators =', r.aggregate_operators)
-print('aggregate_value =', r.aggregate_value)
-print('x axis =', r.x_axis)
-print('y axis =', r.y_axis)
-'''
+try:
+    r.read()
+except Exception:
+    ('bad input')
+
+
+print('r urls =', r.urls)
+print('r domains =', r.domains)
+print('r categories =', r.categories)
+print('r selectors =', r.selectors)
+print('r modifiers =', r.modifiers)
+print('r response =', r.response)
+print('r page =', r.page)
+print('r rules =', r.rules)
+print('r conditions =', r.conditions)
+print('r where =', r.where)
+print('r operators =', r.operators)
+print('r values =', r.values)
+print('r logical_operators =', r.logical_operators)
+print('r group_by =', r.group_by)
+print('r aggregate_function =', r.aggregate_function)
+print('r aggregate_operators =', r.aggregate_operators)
+print('r aggregate_value =', r.aggregate_value)
+print('r order =', r.order)
+print('r ascending =', r.ascending)
+#print('r plot type =', r.plot_type)
+print('r cats =', r.cats)
+print('r vars =', r.vars)
+
+
+
 
 
 
