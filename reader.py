@@ -1,6 +1,6 @@
-from compiler import MyLexer as Lexer
-from compiler import MyParser as Parser_
-from compiler import Sorter
+from compiler.lexer import Lexer
+from compiler.parser import Parser_
+from compiler.sorter import Sorter
 
 
 class Reader:
@@ -28,8 +28,16 @@ class Reader:
     vars = []
 
     def read(self):
+        query = ''
         with open('src.dsl', 'r') as file:
-            query = file.read().replace('\n', ' ')
+            for line in file:
+                if line[0] != '#':
+                    query += line.replace('\n', ' ')
+        print(query)
+            #query = file.read().replace('\n', ' ')
+        #with open('src.dsl', 'r') as file:
+        #    for line in file:
+        #        query += line
 
         lexer = Lexer(query)
         lexer.build()

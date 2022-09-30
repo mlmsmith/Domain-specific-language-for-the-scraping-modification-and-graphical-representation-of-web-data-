@@ -16,47 +16,14 @@ class Crawler(CrawlSpider):
 
     def parse_item(self, response):
 
+        loader = ItemLoader(item=DsqlscraperItem(), response=response)
         for category in range(len(r.categories)):
-            for res in response.css(r.selectors[category]):
-                loader = ItemLoader(item=DsqlscraperItem(), selector=res)
+
+            if r.selectors[category].startswith('/') or r.selectors[category].startswith('./'):
+                loader.add_xpath(r.categories[category], r.selectors[category])
+            else:
                 loader.add_css(r.categories[category], r.selectors[category])
-
-                yield loader.load_item()
-
-    '''
-    rules = []
-    allow_values = {}
-    deny_values = {}
-    callback_values = {}
-
-    for i in range(len(r.rules)):
-        for j in r.rules[i].keys():
-            if j == 'allow':
-                allow_values[i] = r.rules[i][j]
-            if j == 'deny':
-                deny_values[i] = r.rules[i][j]
-            if j == 'callback':
-                callback_values[i] = r.rules[i][j]
-
-    for i in range(len(r.rules)):
-        allows = []
-        denys = []
-        callbacks = []
-        if i in allow_values:
-            allows.append(allow_values[i])
-        if i in deny_values:
-            denys.append(deny_values[i])
-        if i in callback_values:
-            callbacks.append(callback_values[i])
-        rules.append(Rule(LinkExtractor(allow=allows, deny=denys), callback=callbacks))
-
-    rules = tuple(rules)
-    
-    rules = [
-        Rule(LinkExtractor(allow='collections/japanese-whisky', deny='products')),
-        Rule(LinkExtractor(allow='products'), callback='parse_item')
-    ]
-    '''
+        yield loader.load_item()
 
 
 

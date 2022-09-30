@@ -1,193 +1,13 @@
-import sys
-
-import ply.lex as lex
-import ply.yacc as yacc
 import re
 
 
-class MyLexer:
-    def __init__(self, DSQL):
-        self.DSQL = DSQL
-    t = []
-    tokens = [
-        'SCRAPE',
-        'CRAWL',
-        'FIELD',
-        # 'NAME',
-        'SELECTOR',
-        'COLON',
-        'MODIFIER',
-        'URL',
-        'DOMAIN',
-        #'L_BRACKET',
-        #'R_BRACKET',
-        'COMMA',
-        'FROM',
-        'WHERE',
-        'AND',
-        'OR',
-        'EQUALS',
-        'GREATER',
-        'LESS',
-        'GREATER_EQUAL',
-        'LESS_EQUAL',
-        'NOT_EQUAL',
-        'RESPONSE',
-        'PAGE',
-        'INTEGER',
-        'FLOAT',
-        # 'STRING',
-        'RULES_LABEL',
-        'RULES',
-        'GROUP_BY',
-        'HAVING',
-        'AVERAGE',
-        'SUM',
-        'COUNT',
-        # 'WORD',
-        'COLUMN',
-        'ORDER_BY',
-        'DESCENDING',
-        'PLOT',
-        'CATS',
-        'VARS'
-    ]
-
-    t_SCRAPE = r'(?i)SCRAPE'
-    t_CRAWL = r'(?i)CRAWL'
-    t_FIELD = r'[A-Za-z]+(?=:)'
-    # t_NAME = r'[A-Za-z]+(?!=:)'
-    t_SELECTOR = r'\'(.*?)\''
-    t_MODIFIER = r'\((.*?)\)'
-    t_URL = r'\'http(.+?)\''
-    t_DOMAIN = r'(?i)DOMAIN'
-    t_COLON = r'\:'
-    #t_L_BRACKET = r'\['
-    #t_R_BRACKET = r'\]'
-    t_COMMA = r'\,'
-    t_FROM = r'(?i)FROM'
-    t_WHERE = r'(?i)WHERE'
-    t_AND = r'(?i)AND'
-    t_OR = r'(?i)OR'
-    t_EQUALS = r'\='
-    t_RESPONSE = r'(?i)RESPONSE'
-    t_PAGE = r'(?i)PLINK'
-    t_INTEGER = r'\d+'
-    t_FLOAT = r'\d+(\.)\d+'
-    # t_STRING = r'\(\'.+?\'\)'
-    t_GREATER = r'\>'
-    t_LESS = r'\<'
-    t_GREATER_EQUAL = r'\>\='
-    t_LESS_EQUAL = r'\<\='
-    t_NOT_EQUAL = r'\!\='
-    t_RULES_LABEL = f'(?i)RULES'
-    t_RULES = r'\[{(.*?)\}]'
-    t_GROUP_BY = r'(?i)GROUP_BY'
-    t_HAVING = r'(?i)HAVING'
-    t_AVERAGE = r'(?i)AVG'
-    t_SUM = r'(?i)SUM'
-    t_COUNT = r'(?i)COUNT'
-    # t_WORD = r'(?<=WHERE)[A-Za-z]+'
-    t_COLUMN = r'\[(.*?)\]'
-    t_ORDER_BY = r'(?i)ORDER_BY'
-    t_DESCENDING = r'(?i)DESCENDING'
-    #t_BAR_PLOT = r'(?i)BAR_PLOT'
-    #t_LINE_PLOT = r'(?i)LINE_PLOT'
-    t_PLOT = r'(?i)PLOT'
-    t_CATS = r'(?i)CATS'
-    t_VARS = r'(?i)VARS'
-    t_ignore = r' '
-
-
-    #reserved = {
-    #    'from': 'FROM',
-    #    'where': 'WHERE',
-    #    'and': 'AND'
-    #}
-
-    def t_error(self, t):
-        print('Invalid input')
-
-    def build(self):
-        self.lexer = lex.lex(module=self)
-
-    def test(self):
-        self.lexer.input(self.DSQL)
-        while True:
-            tok = self.lexer.token()
-            if not tok:
-                break
-            self.t.append(tok)
-            print(tok)
-
-
-
-class MyParser:
-
-    def __init__(self, lexer, tokens):
-        self.lexer = lexer
-        self.tokens = tokens
-        self.parser = yacc.yacc(module=self)
-
-    def build(self):
-        self.parser = yacc.yacc(module=self)
-
-    def p_statement(self, p):
-        """
-        statement      : scrape
-                       | crawl
-        scrape         : SCRAPE categories location response page manipulation sorting plot
-        crawl          : CRAWL categories location instructions manipulation sorting plot
-        categories     : category
-                       | category COMMA categories
-        category       : FIELD COLON SELECTOR MODIFIER
-                       | FIELD COLON SELECTOR
-        location       : FROM URL
-                       | FROM URL domain
-        domain         : DOMAIN EQUALS SELECTOR
-        response       : RESPONSE EQUALS SELECTOR
-        page           : PAGE EQUALS SELECTOR
-                       |
-        instructions   : RULES_LABEL EQUALS RULES
-        manipulation   : filtering aggregation
-                       | filtering
-                       |
-        filtering      : WHERE conditions
-        conditions     : condition
-                       | condition AND conditions
-                       | condition OR conditions
-        condition      : COLUMN operator INTEGER
-                       | COLUMN operator FLOAT
-                       | COLUMN EQUALS SELECTOR
-        operator       : EQUALS
-                       | GREATER
-                       | LESS
-                       | GREATER_EQUAL
-                       | LESS_EQUAL
-                       | NOT_EQUAL
-        aggregation    : GROUP_BY COLUMN
-                       | GROUP_BY COLUMN HAVING aggregate
-                       | GROUP_BY COLUMN HAVING aggregate operator INTEGER
-                       | GROUP_BY COLUMN HAVING aggregate operator FLOAT
-        aggregate      : AVERAGE
-                       | SUM
-                       | COUNT
-        sorting        : ORDER_BY COLUMN
-                       | ORDER_BY COLUMN DESCENDING
-                       |
-        plot           : PLOT cats COMMA vars
-                       |
-        cats           : CATS EQUALS MODIFIER
-        vars           : VARS EQUALS MODIFIER
-        """
-
-    def p_error(self, p):
-        print('invalid syntax')
-        #sys.exit(1)
-
-
 class Sorter:
+    """Sorts components of DSQL statement into appropriate variables
 
+    Expects: list of tokens from lexer
+    Modifies:
+    Returns: tokens
+    """
     urls = []
     domains = []
     categories = []
@@ -207,7 +27,6 @@ class Sorter:
     aggregate_value = []
     order = ''
     ascending = True
-    #plot_type = ''
     cats = []
     vars = []
 
@@ -216,9 +35,6 @@ class Sorter:
 
     def remove_quotes(self, str):
         return re.sub('[\'\"]', '', str)
-
-    #def flatten(self, l):
-    #    return [item for sublist in l for item in sublist]
 
     def flatten(self, lst):
         new_lst = []
@@ -237,14 +53,17 @@ class Sorter:
             return False
 
     def sort(self):
-
+        # keywords for constructing rule dictionaries with eval()
         allow = 'allow'
         deny = 'deny'
         callback = 'callback'
-
+        restrict_css = 'restrict_css'
+        restrict_xpaths = 'restrict_xpaths'
+        follow = 'follow'
+        # loop for assigning components to variables
         for token in range(len(self.tokens)):
-            # add URLs, fields and their selectors and modifiers
             if self.tokens[token].type == 'URL': self.urls.append(self.remove_quotes(self.tokens[token].value))
+            if self.tokens[token].type == 'DOMAIN': self.domains.append(self.remove_quotes(self.tokens[token+2].value))
             if self.tokens[token].type == 'FIELD': self.categories.append(self.tokens[token].value)
             if self.tokens[token].type == 'SELECTOR' and self.tokens[token-1].type != 'EQUALS':
                 self.selectors.append(self.remove_quotes(self.tokens[token].value))
@@ -274,7 +93,7 @@ class Sorter:
                 self.logical_operators.append(self.tokens[token].value)
             if self.tokens[token - 1].type == 'GROUP_BY':
                 self.group_by.append(self.tokens[token].value.strip('[]').split(','))
-                self.group_by = self.flatten(self.group_by)#
+                self.group_by = self.flatten(self.group_by)
                 for j in range(len(self.group_by)):
                     self.group_by[j] = self.group_by[j].strip()
             if self.tokens[token - 1].type == 'HAVING': self.aggregate_function = self.tokens[token].value
@@ -291,8 +110,6 @@ class Sorter:
                 self.order = self.tokens[token].value.strip('[]')
             if self.tokens[token].type == 'DESCENDING':
                 self.ascending = False
-            #if self.tokens[token].type == 'BAR_PLOT':
-            #    self.plot_type = self.tokens[token].type
             if self.tokens[token - 2].type == 'CATS' and self.tokens[token].type == 'MODIFIER':
                 self.cats.append(re.sub('[\(\) ]', '', str(self.tokens[token].value)).split(','))
                 self.cats = self.flatten(self.cats)
@@ -300,16 +117,21 @@ class Sorter:
                 self.vars.append(re.sub('[\(\) ]', '', str(self.tokens[token].value)).split(','))
                 self.vars = self.flatten(self.vars)
 
+
 '''
-with open('src.dsl', 'r') as file:
+from lexer import Lexer
+from parser import Parser_
+
+
+with open('../src.dsl', 'r') as file:
     query = file.read().replace('\n', ' ')
 
 
-l = MyLexer(query)
+l = Lexer(query)
 l.build()
 l.test()
 
-p = MyParser(l, l.tokens)
+p = Parser_(l, l.tokens)
 
 p.build()
 
@@ -341,36 +163,6 @@ print('s ascending', s.ascending)
 #print('s plot type', s.plot_type)
 print('s cats', s.cats)
 print('s vars', s.vars)
-
 '''
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

@@ -13,7 +13,7 @@ having = 'avg'
 '''
 
 
-class Data_minipulator:
+class Data_minipulator:# change to DataManipulation
 
     query = ''
 

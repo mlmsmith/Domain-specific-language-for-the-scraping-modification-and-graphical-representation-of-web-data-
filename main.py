@@ -1,5 +1,4 @@
 import sys
-
 import pandas.core.computation.ops
 from scrapy.crawler import CrawlerProcess
 from DSQLScraper.DSQLScraper.spiders.genericSpider import GenericSpider
@@ -33,9 +32,13 @@ def main():
         process.crawl(GenericSpider)
         process.start()
     # instantiate data frame
-    df = pd.read_csv('data.csv')
+    try:
+        df = pd.read_csv('data.csv')
+    except pandas.errors.EmptyDataError:
+        print('No data scraped')
+        sys.exit(1)
     # check if data was successfully scraped
-    if df.empty:
+    if not len(df.index) > 1:#df.empty:
         print('No data scraped')
         sys.exit(1)
     # check if data filtering is specified
@@ -61,7 +64,7 @@ def main():
             df = dm.order_by(df, r.order, True)
         else:
             df = dm.order_by(df, r.order, False)
-    df.to_csv('data.csv')
+        df.to_csv('data.csv')
     # check if graph is specified
 
     if len(r.cats) > 0:

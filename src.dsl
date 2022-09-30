@@ -1,16 +1,23 @@
 SCRAPE
-team: 'td.name'(clean),
+team: 'td.name'(clean, upper),
 year: 'td.year'(clean),
 wins: 'td.wins'(clean, int),
-losses: 'td.losses'(clean)
+losses: 'td.losses'(clean, float)
 FROM 'https://www.scrapethissite.com/pages/forms/?per_page=25'
 RESPONSE = 'tr.team'
 WHERE [team] = 'New Jersey Devils'
-OR [team] = 'St. Louis Blues'
-OR [team] = 'Winnipeg Jets'
-OR [team] = 'Chicago Blackhawks'
-OR [team] = 'Montreal Canadiens'
-OR [team] = 'New York Islanders'
+OR [team] = 'ST. LOUIS BLUES'
+OR [team] = 'WINNIPEG JETS'
+OR [team] = 'CHICAGO BLACKHAWKS'
+OR [team] = 'MONTREAL CANADIENS'
+OR [team] = 'NEW YORK ISLANDERS'
 PLOT
-CATS = (team)
+CATS = (team),
 VARS = (wins, losses)
+
+
+
+
+
+
+
