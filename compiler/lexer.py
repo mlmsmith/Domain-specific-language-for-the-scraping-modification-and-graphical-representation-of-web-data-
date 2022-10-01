@@ -116,3 +116,4 @@ class Lexer:
             if not tok:
                 break
             self.t.append(tok)
+            print(tok)

@@ -5,7 +5,7 @@ import pandas as pd
 
 class TestDataManipulation(unittest.TestCase):
     """
-    Examples of tests used for data manipulation module post integration
+    Examples of tests used for data manipulation module pre integration
     """
 
     def setUp(self):
