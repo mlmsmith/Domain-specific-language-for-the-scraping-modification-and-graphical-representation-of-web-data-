@@ -4,6 +4,10 @@ from compiler.sorter import Sorter
 
 
 class Reader:
+    """
+    Read in input from dsl.sql, invokes compilation of input and takes the variables created in Sorter to be imported
+    into other areas of the program
+    """
     urls = []
     domains = []
     categories = []
@@ -23,25 +27,23 @@ class Reader:
     aggregate_value = []
     order = ''
     ascending = bool
-    #plot_type = ''
     cats = []
     vars = []
 
     def read(self):
-        query = ''
+        """
+        Reads in DSQL input, ignoring lines beginning with '#'
+        :return: String of input
+        """
+        query = ''  # input added to query string
         with open('src.dsl', 'r') as file:
             for line in file:
                 if line[0] != '#':
                     query += line.replace('\n', ' ')
-        print(query)
-            #query = file.read().replace('\n', ' ')
-        #with open('src.dsl', 'r') as file:
-        #    for line in file:
-        #        query += line
-
+        # Instantiate compiler classes
         lexer = Lexer(query)
         lexer.build()
-        lexer.test()
+        lexer.tokenize()
 
         tokens = lexer.tokens
 
@@ -51,7 +53,7 @@ class Reader:
 
         sorter = Sorter(lexer.t)
         sorter.sort()
-
+        # Assign Sorter variables to Reader
         self.urls = sorter.urls
         self.domains = sorter.domains
         self.categories = sorter.categories
@@ -70,60 +72,15 @@ class Reader:
         self.aggregate_value = sorter.aggregate_value
         self.order = sorter.order
         self.ascending = sorter.ascending
-        #self.plot_type = sorter.plot_type
         self.cats = sorter.cats
         self.vars = sorter.vars
 
 
+# Instantiate Reader class in current file to avoid circular import issues
 r = Reader()
 try:
     r.read()
-except Exception:
-    ('bad input')
+except Exception as err:
+    print(err)
 
 
-print('r urls =', r.urls)
-print('r domains =', r.domains)
-print('r categories =', r.categories)
-print('r selectors =', r.selectors)
-print('r modifiers =', r.modifiers)
-print('r response =', r.response)
-print('r page =', r.page)
-print('r rules =', r.rules)
-print('r conditions =', r.conditions)
-print('r where =', r.where)
-print('r operators =', r.operators)
-print('r values =', r.values)
-print('r logical_operators =', r.logical_operators)
-print('r group_by =', r.group_by)
-print('r aggregate_function =', r.aggregate_function)
-print('r aggregate_operators =', r.aggregate_operators)
-print('r aggregate_value =', r.aggregate_value)
-print('r order =', r.order)
-print('r ascending =', r.ascending)
-#print('r plot type =', r.plot_type)
-print('r cats =', r.cats)
-print('r vars =', r.vars)
-
-
-
-
-
-
-
-
-
-
-
-
-
-#with open('src.dsl', 'r') as file:
-    #query = file.read().replace('\n', ' ')
-#
-
-#l = Lexer(query)
-#l.build()
-#l.test()
-#for i in l.t:
-#    print(i)
-#print()

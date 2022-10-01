@@ -2,12 +2,10 @@ import re
 
 
 class Sorter:
-    """Sorts components of DSQL statement into appropriate variables
-
-    Expects: list of tokens from lexer
-    Modifies:
-    Returns: tokens
     """
+    Assigns tokens of DSQL input to correct variables to be passed to Reader class for distribution
+    """
+    #  Data structure for language components to be assigned to
     urls = []
     domains = []
     categories = []
@@ -31,12 +29,26 @@ class Sorter:
     vars = []
 
     def __init__(self, tokens):
+        """
+        Initialises class with tokens from instance of Lexer
+        :param tokens: List of LexToken objects
+        """
         self.tokens = tokens
 
     def remove_quotes(self, str):
+        """
+        Remove single and double quotes around strings from DSQL input
+        :param str: LexToken value
+        :return: String without quotes
+        """
         return re.sub('[\'\"]', '', str)
 
     def flatten(self, lst):
+        """
+        Converts nested list to 1 dimensional list
+        :param lst: nested list token value
+        :return: 1 dimensional list
+        """
         new_lst = []
         for i in lst:
             if type(i) != list:
@@ -46,6 +58,11 @@ class Sorter:
         return new_lst
 
     def is_number(self, string):
+        """
+        converts string value into float if the string only contains numerical characters
+        :param string: token value
+        :return: string if convertable and False boolean if not
+        """
         try:
             float(string)
             return True
@@ -53,6 +70,10 @@ class Sorter:
             return False
 
     def sort(self):
+        """
+        Processes all tokens from LexToken list, makes format adjustments to tokens and assigns them to correct
+        data structure
+        """
         # keywords for constructing rule dictionaries with eval()
         allow = 'allow'
         deny = 'deny'
@@ -117,52 +138,5 @@ class Sorter:
                 self.vars.append(re.sub('[\(\) ]', '', str(self.tokens[token].value)).split(','))
                 self.vars = self.flatten(self.vars)
 
-
-'''
-from lexer import Lexer
-from parser import Parser_
-
-
-with open('../src.dsl', 'r') as file:
-    query = file.read().replace('\n', ' ')
-
-
-l = Lexer(query)
-l.build()
-l.test()
-
-p = Parser_(l, l.tokens)
-
-p.build()
-
-p.parser.parse(query)
-
-s = Sorter(l.t)
-s.sort()
-
-
-print('s urls', s.urls)
-print('s domains', s.domains)
-print('s categories', s.categories)
-print('s selectors', s.selectors)
-print('s modifiers', s.modifiers)
-print('s response', s.response)
-print('s page', s.page)
-print('s rules', s.rules)
-print('s conditions', s.conditions)
-print('s where', s.where)
-print('s operators', s.operators)
-print('s values', s.values)
-print('s logical_operators', s.logical_operators)
-print('s group_by', s.group_by)
-print('s aggregate_function', s.aggregate_function)
-print('s aggregate_operators', s.aggregate_operators)
-print('s aggregate_value', s.aggregate_value)
-print('s order', s.order)
-print('s ascending', s.ascending)
-#print('s plot type', s.plot_type)
-print('s cats', s.cats)
-print('s vars', s.vars)
-'''
 
 

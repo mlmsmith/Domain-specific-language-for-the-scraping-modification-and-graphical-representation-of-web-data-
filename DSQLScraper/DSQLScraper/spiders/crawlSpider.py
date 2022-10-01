@@ -1,24 +1,29 @@
 import scrapy
-from scrapy.crawler import CrawlerProcess
 from scrapy.spiders import CrawlSpider, Rule
-from scrapy.linkextractors import LinkExtractor
 from DSQLScraper.DSQLScraper.items import DsqlscraperItem, CrawlspiderRuleMaker
 from scrapy.loader import ItemLoader
 from reader import r
 
 
 class Crawler(CrawlSpider):
-
+    """
+    Scrapes the intended website for the specified data according to the specified rules
+    """
     name = 'crawl'
     start_urls = r.urls
     allowed_domains = r.domains
     rules = CrawlspiderRuleMaker.rules
 
     def parse_item(self, response):
-
+        """
+        Returns scraped data by processing the response from the website
+        :param response: Response by website to request
+        :return: Items of scraped data
+        """
         loader = ItemLoader(item=DsqlscraperItem(), response=response)
+        # Generate items of scraped data
         for category in range(len(r.categories)):
-
+            # check if category selector is css or xpath
             if r.selectors[category].startswith('/') or r.selectors[category].startswith('./'):
                 loader.add_xpath(r.categories[category], r.selectors[category])
             else:
@@ -31,18 +36,6 @@ class Crawler(CrawlSpider):
 
 
 
-
-
-#print(len(Crawler.rules))
-#print(Crawler.rules)
-#print(Crawler.allow_values)
-#print(Crawler.deny_values)
-#print(Crawler.callback_values)
-
-#for i in range(len(Crawler.rules)):
-#    print(i+1, 'allow', Crawler.rules[i].link_extractor.allow_res)
-#    print(i+1, 'deny', Crawler.rules[i].link_extractor.deny_res)
-#    print(i+1, 'callback', Crawler.rules[i].callback)
 
 
 

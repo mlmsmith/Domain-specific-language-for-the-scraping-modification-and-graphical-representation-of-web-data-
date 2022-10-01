@@ -39,10 +39,15 @@ def replace_spaces(value):
 
 
 class DsqlscraperItem(scrapy.Item):
-
+    """
+    Creates items of scraped data and modifies the data within before passing to spider classes
+    """
     def __init__(self):
+        """
+        Initialises class by inheriting fields dictionary from Item class
+        """
         super().__init__()
-
+        # assigns appropriate data modification functions to each Field object before adding to fields dictionary
         for i in range(len(r.categories)):
             stipulations = []
             if 'clean' in r.modifiers[i]: stipulations.append(remove_tags)
@@ -58,7 +63,9 @@ class DsqlscraperItem(scrapy.Item):
 
 
 class CrawlspiderRuleMaker:
-
+    """
+    Creates tuple of Rule objects to be passed to CrawlSpider
+    """
     rules = []
     allow_values = {}
     deny_values = {}
@@ -66,7 +73,7 @@ class CrawlspiderRuleMaker:
     restrict_xpath_values = {}
     callback_values = {}
     follow_values = {}
-
+    # Add values to be processed by each Rule parameter with the index at which they should be in the Rule object
     if r.rules:
         for i in range(len(r.rules)):
             for j in r.rules[i].keys():
@@ -82,7 +89,7 @@ class CrawlspiderRuleMaker:
                     restrict_xpath_values[i] = r.rules[i][j]
                 if j == 'follow':
                     follow_values[i] = r.rules[i][j]
-
+        # Add function parameters in the correct order to Rule objects
         for i in range(len(r.rules)):
             allows = None
             denys = None
