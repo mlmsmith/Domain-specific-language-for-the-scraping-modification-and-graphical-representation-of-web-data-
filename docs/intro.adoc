@@ -1,0 +1,13 @@
+= Introduction
+
+The premise of this project is based on the hypothesis that there are certain improvements  that could be made to conventional web scraping methods in certain situations, and that these improvements could be achieved through the use of a declarative language developed for this specific purpose. This section defines the overarching goals of the project and a broad overview of the methods for achieving them.
+
+== Objectives
+
+The main issues that this project attempts to remedy are the long implementation times and complexity of traditional web scraping frameworks, as well as the limitations of web scraping GUI tools and plugins. It attempts to do so by providing a legitimate third option in the form of a domain-specific query language for the purpose of data extraction, whose statements are used to determine the functionality of underlying generic web scraper classes.
+
+There were three main criteria for the success of the project. The first was that the syntax of the language should be succinct enough to be a genuinely faster alternative to coding a bespoke web scraper from scratch. The second was that the language should be able to utilize sufficient functionality from the framework on which it was built to be a worthy alternative to a GUI-based web scraper.
+
+The third objective was to make the language as intuitive and easy to understand as possible, with a clear and concise syntax, allowing users with prior programming experience but who may not have had any previous experience with web scraping frameworks to use it. This project report documents the design, development, testing, and result analysis of this language and the corresponding program.
+
+

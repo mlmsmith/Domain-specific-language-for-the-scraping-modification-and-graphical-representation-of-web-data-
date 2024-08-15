@@ -1,0 +1,7 @@
+= Approach and methodology
+
+The approach used to achieve the project’s objectives was to provide a layer of abstraction between the user and the Python Scrapy framework. The underlying generic Scrapy spider classes were constructed without hard-coding any variables specific to a query, allowing an unbounded number to be specified by the user. Stipulations about the format of the intended data to be scraped could also be defined, which could be granted by the invocation of auxiliary classes before being passed to the Scrapy spider classes.
+
+A crucial element to the project’s potential success is the provision of additional data manipulation capabilities post-scraping, the implementation of which would be significantly more complicated with a traditional coded web scraper, or would require the use of additional tools separate to it.
+
+The syntax of the query language resembles the notation and syntax of SQL as much as possible in order to maintain a straightforward and concise structure, and to make its use as intuitive as possible by basing the language on another very common data extraction language of which many users may already be familiar.

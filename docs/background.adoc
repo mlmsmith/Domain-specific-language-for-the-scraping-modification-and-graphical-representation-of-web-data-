@@ -1,0 +1,10 @@
+= Background
+
+This section provides a broad overview of key concepts, and explanations of how they relate to the objective of this project.
+
+== Domain Specific Languages
+
+Domain specific languages (DSLs) are programming languages designed for a specific purpose, optimised for use within their intended domain of application. DSLs are ubiquitous in computing, being present in virtually all avenues of technology, and with a notably high concentration within the domain of information extraction. Their syntax is typically simpler than general purpose languages (GPLs), only catering for the specific task for which they were designed, and in many cases due to being designed with less technical users in mind (Fowler, 2010).
+
+DSLs can be advantageous over GLPs for a specific task due to the fact that they are intended to be simpler to program in, thus increasing productivity. Their specificity may also allow for more effective communication with experts in a particular domain, which is described by Martin Fowler as one of the most difficult problems to overcome in software development (Fowler, 2010). An example to illustrate the extent of specificity for which a language can be developed would be the Actulus modelling language, which was developed to calculate people’s life insurance and pensions for use by actuaries.
+
