@@ -1,6 +1,6 @@
 # A domain specific query language for the scraping, modification and graphical representation of web data 
 
-## The purpose of this project was to create a means of reducing the complexity and implementation time of coding custom web scraping classes from scratch, as well the manipulation of data and visualisation generation post scraping. This was done by providing a layer of abstraction over Scrapy spider classes and classes utilising pandas and matplotlib in the form of a domain specific language which followed a syntax similar to that of SQL.
+## The purpose of this project was to create a way to reduce the complexity and implementation time of coding custom web scraping classes from scratch. This was done by providing a layer of abstraction over Scrapy spider classes in the form of a domain specific language which followed a syntax similar to that of SQL. Data manipulation and graphical representation functionality was also implemented.
 
 ### A high level overview of the program:
 ![Screenshot 2023-02-20 at 17 50 28](https://user-images.githubusercontent.com/57990458/220173217-ede01020-9237-4de6-801a-43257fb154b5.png)
