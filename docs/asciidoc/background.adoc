@@ -8,3 +8,10 @@ Domain specific languages (DSLs) are programming languages designed for a specif
 
 DSLs can be advantageous over GLPs for a specific task due to the fact that they are intended to be simpler to program in, thus increasing productivity. Their specificity may also allow for more effective communication with experts in a particular domain, which is described by Martin Fowler as one of the most difficult problems to overcome in software development (Fowler, 2010). An example to illustrate the extent of specificity for which a language can be developed would be the Actulus modelling language, which was developed to calculate people’s life insurance and pensions for use by actuaries.
 
+
+
+
+
+Studies have been carried out to assess whether DSLs are in fact superior to GLPs in their specific domain. One such study by Kosar at al. assessed the effectiveness of DSLs over the libraries provided by a GLP, as there is still contention as to whether such libraries are an equivalent substitute for DSLs. The study compared XAML and C# for the construction of graphical interfaces, wherein 36 participants answered a questionnaire pertaining to this domain. The study found that participants scored 15% higher when solving the problems in the questionnaire using XAML, despite having significantly less experience using the language than with C# (Kosar et al, 2010).
+
+
